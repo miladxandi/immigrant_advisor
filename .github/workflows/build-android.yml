@@ -50,7 +50,8 @@ jobs:
           -c Release \
           -f net11.0-android \
           -o ./publish \
-          -p:AndroidPackageFormat=apk
+          -p:AndroidPackageFormat=apk \
+          -p:TargetFrameworks=net11.0-android
 
     - name: Build Android APK (Signed)
       if: github.event_name != 'pull_request'
@@ -65,10 +66,11 @@ jobs:
           -o ./publish \
           -p:AndroidPackageFormat=apk \
           -p:AndroidKeyStore=true \
-          -p:AndroidSigningKeyStore=immigrant_advisor.keystore \
+          -p:AndroidSigningKeyStore=miladxandi.keystore \
           -p:AndroidSigningKeyAlias=$KEYSTORE_ALIAS \
           -p:AndroidSigningKeyPass=$KEY_PASSWORD \
-          -p:AndroidSigningStorePass=$KEYSTORE_PASSWORD
+          -p:AndroidSigningStorePass=$KEYSTORE_PASSWORD \
+          -p:TargetFrameworks=net11.0-android
       working-directory: .
 
     - name: Upload APK artifact
