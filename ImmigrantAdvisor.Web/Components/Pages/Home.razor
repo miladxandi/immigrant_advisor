@@ -7,37 +7,37 @@
 
 <PageTitle>مشاور مهاجرت هوشمند</PageTitle>
 
-<div class="container-fluid py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white text-center">
+<div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="flex justify-center">
+        <div class="w-full max-w-5xl">
+            <div class="bg-white rounded-2xl shadow-xl">
+                <div class="bg-blue-600 text-white text-center rounded-t-2xl py-4 px-6">
                     <h2 class="mb-0">🌍 مشاور مهاجرت هوشمند</h2>
                     <p class="mb-0 mt-2">اطلاعات خود را وارد کنید تا بهترین گزینه‌های مهاجرتی را به شما پیشنهاد دهیم</p>
                 </div>
-                <div class="card-body">
+                <div class="p-6">
                     <EditForm Model="@factors" OnValidSubmit="@HandleSubmit" FormName="ImmigrationForm">
                         <DataAnnotationsValidator />
                         
                         <!-- اطلاعات شخصی -->
-                        <div class="section mb-4">
-                            <h4 class="text-primary">👤 اطلاعات شخصی</h4>
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label class="form-label">سن</label>
-                                    <InputNumber @bind-Value="factors.Age" class="form-control" min="18" max="80" />
+                        <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-blue-600">👤 اطلاعات شخصی</h4>
+                            <div class="flex flex-wrap -mx-3 gap-3">
+                                <div class="w-full md:w-1/3 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">سن</label>
+                                    <InputNumber @bind-Value="factors.Age" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" min="18" max="80" />
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">جنسیت</label>
-                                    <InputSelect @bind-Value="factors.Gender" class="form-select">
+                                <div class="w-full md:w-1/3 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">جنسیت</label>
+                                    <InputSelect @bind-Value="factors.Gender" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@Gender.Male">مرد</option>
                                         <option value="@Gender.Female">زن</option>
                                         <option value="@Gender.PreferNotToSay">ترجیح می‌دهم نگویم</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">وضعیت تأهل</label>
-                                    <InputSelect @bind-Value="factors.MaritalStatus" class="form-select">
+                                <div class="w-full md:w-1/3 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">وضعیت تأهل</label>
+                                    <InputSelect @bind-Value="factors.MaritalStatus" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@MaritalStatus.Single">مجرد</option>
                                         <option value="@MaritalStatus.Married">متأهل</option>
                                         <option value="@MaritalStatus.Divorced">مطلقه</option>
@@ -46,13 +46,13 @@
                                 </div>
                                 @if (factors.MaritalStatus == MaritalStatus.Married)
                                 {
-                                    <div class="col-md-6">
-                                        <label class="form-label">تعداد فرزندان</label>
-                                        <InputNumber @bind-Value="factors.NumberOfChildren" class="form-control" min="0" max="10" />
+                                    <div class="w-full md:w-1/2 px-3">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">تعداد فرزندان</label>
+                                        <InputNumber @bind-Value="factors.NumberOfChildren" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" min="0" max="10" />
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">همسر شاغل است؟</label>
-                                        <InputSelect @bind-Value="factors.SpouseWorking" class="form-select">
+                                    <div class="w-full md:w-1/2 px-3">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">همسر شاغل است؟</label>
+                                        <InputSelect @bind-Value="factors.SpouseWorking" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                             <option value="true">بله</option>
                                             <option value="false">خیر</option>
                                         </InputSelect>
@@ -62,12 +62,12 @@
                         </div>
 
                         <!-- تحصیلات و زبان -->
-                        <div class="section mb-4">
-                            <h4 class="text-primary">🎓 تحصیلات و زبان</h4>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">مقطع تحصیلی</label>
-                                    <InputSelect @bind-Value="factors.Education" class="form-select">
+                        <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-blue-600">🎓 تحصیلات و زبان</h4>
+                            <div class="flex flex-wrap -mx-3 gap-3">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">مقطع تحصیلی</label>
+                                    <InputSelect @bind-Value="factors.Education" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@EducationLevel.NoFormalEducation">بدون تحصیلات رسمی</option>
                                         <option value="@EducationLevel.HighSchool">دیپلم</option>
                                         <option value="@EducationLevel.AssociateDegree">فوق دیپلم</option>
@@ -77,13 +77,13 @@
                                         <option value="@EducationLevel.PostDoctoral">پسادکترا</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">رشته تحصیلی</label>
-                                    <InputText @bind-Value="factors.FieldOfStudy" class="form-control" placeholder="مثال: مهندسی کامپیوتر" />
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">رشته تحصیلی</label>
+                                    <InputText @bind-Value="factors.FieldOfStudy" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="مثال: مهندسی کامپیوتر" />
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">سطح زبان انگلیسی</label>
-                                    <InputSelect @bind-Value="factors.EnglishLevel" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">سطح زبان انگلیسی</label>
+                                    <InputSelect @bind-Value="factors.EnglishLevel" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@LanguageProficiency.None">هیچ</option>
                                         <option value="@LanguageProficiency.Basic">مقدماتی</option>
                                         <option value="@LanguageProficiency.Intermediate">متوسط</option>
@@ -91,9 +91,9 @@
                                         <option value="@LanguageProficiency.Native">مادری</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">سطح زبان فرانسوی</label>
-                                    <InputSelect @bind-Value="factors.FrenchLevel" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">سطح زبان فرانسوی</label>
+                                    <InputSelect @bind-Value="factors.FrenchLevel" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@LanguageProficiency.None">هیچ</option>
                                         <option value="@LanguageProficiency.Basic">مقدماتی</option>
                                         <option value="@LanguageProficiency.Intermediate">متوسط</option>
@@ -101,9 +101,9 @@
                                         <option value="@LanguageProficiency.Native">مادری</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">سطح زبان آلمانی</label>
-                                    <InputSelect @bind-Value="factors.GermanLevel" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">سطح زبان آلمانی</label>
+                                    <InputSelect @bind-Value="factors.GermanLevel" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@LanguageProficiency.None">هیچ</option>
                                         <option value="@LanguageProficiency.Basic">مقدماتی</option>
                                         <option value="@LanguageProficiency.Intermediate">متوسط</option>
@@ -115,20 +115,20 @@
                         </div>
 
                         <!-- شغل و تخصص -->
-                        <div class="section mb-4">
-                            <h4 class="text-primary">💼 شغل و تخصص</h4>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">شغل فعلی</label>
-                                    <InputText @bind-Value="factors.Occupation" class="form-control" placeholder="مثال: مهندس نرم‌افزار" />
+                        <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-blue-600">💼 شغل و تخصص</h4>
+                            <div class="flex flex-wrap -mx-3 gap-3">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">شغل فعلی</label>
+                                    <InputText @bind-Value="factors.Occupation" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="مثال: مهندس نرم‌افزار" />
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">سابقه کار (سال)</label>
-                                    <InputNumber @bind-Value="factors.YearsOfExperience" class="form-control" min="0" max="50" />
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">سابقه کار (سال)</label>
+                                    <InputNumber @bind-Value="factors.YearsOfExperience" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" min="0" max="50" />
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">نوع اشتغال</label>
-                                    <InputSelect @bind-Value="factors.CurrentEmployment" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">نوع اشتغال</label>
+                                    <InputSelect @bind-Value="factors.CurrentEmployment" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@EmploymentType.Unemployed">بیکار</option>
                                         <option value="@EmploymentType.PartTime">پاره‌وقت</option>
                                         <option value="@EmploymentType.FullTime">تمام‌وقت</option>
@@ -138,115 +138,115 @@
                                         <option value="@EmploymentType.Student">دانشجو</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">درآمد سالانه (دلار)</label>
-                                    <InputNumber @bind-Value="factors.AnnualIncomeUSD" class="form-control" min="0" step="1000" />
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">درآمد سالانه (دلار)</label>
+                                    <InputNumber @bind-Value="factors.AnnualIncomeUSD" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" min="0" step="1000" />
                                 </div>
                             </div>
                         </div>
 
                         <!-- وضعیت مالی -->
-                        <div class="section mb-4">
-                            <h4 class="text-primary">💰 وضعیت مالی</h4>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">ارزش خالص دارایی‌ها (دلار)</label>
-                                    <InputNumber @bind-Value="factors.NetWorthUSD" class="form-control" min="0" step="10000" />
+                        <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-blue-600">💰 وضعیت مالی</h4>
+                            <div class="flex flex-wrap -mx-3 gap-3">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ارزش خالص دارایی‌ها (دلار)</label>
+                                    <InputNumber @bind-Value="factors.NetWorthUSD" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" min="0" step="10000" />
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">پس‌انداز سالانه (دلار)</label>
-                                    <InputNumber @bind-Value="factors.AnnualSavingsUSD" class="form-control" min="0" step="5000" />
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">پس‌انداز سالانه (دلار)</label>
+                                    <InputNumber @bind-Value="factors.AnnualSavingsUSD" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" min="0" step="5000" />
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-check">
-                                        <InputCheckbox @bind-Value="factors.HasInvestmentProperty" class="form-check-input" />
-                                        <label class="form-check-label">مالکیت ملک سرمایه‌گذاری</label>
+                                <div class="w-full md:w-1/2 px-3">
+                                    <div class="flex items-center gap-2">
+                                        <InputCheckbox @bind-Value="factors.HasInvestmentProperty" class="rounded h-4 w-4" />
+                                        <label class="text-sm text-gray-700">مالکیت ملک سرمایه‌گذاری</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-check">
-                                        <InputCheckbox @bind-Value="factors.HasBusinessOwnership" class="form-check-input" />
-                                        <label class="form-check-label">مالکیت کسب‌وکار</label>
+                                <div class="w-full md:w-1/2 px-3">
+                                    <div class="flex items-center gap-2">
+                                        <InputCheckbox @bind-Value="factors.HasBusinessOwnership" class="rounded h-4 w-4" />
+                                        <label class="text-sm text-gray-700">مالکیت کسب‌وکار</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- سلامت و روان -->
-                        <div class="section mb-4">
-                            <h4 class="text-primary">🏥 سلامت جسمی و روانی</h4>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">سلامت جسمی</label>
-                                    <InputSelect @bind-Value="factors.PhysicalHealth" class="form-select">
+                        <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-blue-600">🏥 سلامت جسمی و روانی</h4>
+                            <div class="flex flex-wrap -mx-3 gap-3">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">سلامت جسمی</label>
+                                    <InputSelect @bind-Value="factors.PhysicalHealth" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@PhysicalHealthStatus.Excellent">عالی</option>
                                         <option value="@PhysicalHealthStatus.Good">خوب</option>
                                         <option value="@PhysicalHealthStatus.Fair">متوسط</option>
                                         <option value="@PhysicalHealthStatus.Poor">ضعیف</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">سلامت روانی</label>
-                                    <InputSelect @bind-Value="factors.MentalHealth" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">سلامت روانی</label>
+                                    <InputSelect @bind-Value="factors.MentalHealth" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@MentalHealthStatus.Excellent">عالی</option>
                                         <option value="@MentalHealthStatus.Good">خوب</option>
                                         <option value="@MentalHealthStatus.Fair">متوسط</option>
                                         <option value="@MentalHealthStatus.NeedsSupport">نیاز به حمایت</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">تحمل استرس</label>
-                                    <InputSelect @bind-Value="factors.StressTolerance" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">تحمل استرس</label>
+                                    <InputSelect @bind-Value="factors.StressTolerance" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@StressToleranceLevel.Low">کم</option>
                                         <option value="@StressToleranceLevel.Medium">متوسط</option>
                                         <option value="@StressToleranceLevel.High">بالا</option>
                                         <option value="@StressToleranceLevel.VeryHigh">خیلی بالا</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">انعطاف‌پذیری و سازگاری</label>
-                                    <InputSelect @bind-Value="factors.Adaptability" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">انعطاف‌پذیری و سازگاری</label>
+                                    <InputSelect @bind-Value="factors.Adaptability" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@AdaptabilityLevel.Low">کم</option>
                                         <option value="@AdaptabilityLevel.Medium">متوسط</option>
                                         <option value="@AdaptabilityLevel.High">بالا</option>
                                         <option value="@AdaptabilityLevel.VeryHigh">خیلی بالا</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-check">
-                                        <InputCheckbox @bind-Value="factors.HasChronicDisease" class="form-check-input" />
-                                        <label class="form-check-label">بیماری مزمن</label>
+                                <div class="w-full md:w-1/2 px-3">
+                                    <div class="flex items-center gap-2">
+                                        <InputCheckbox @bind-Value="factors.HasChronicDisease" class="rounded h-4 w-4" />
+                                        <label class="text-sm text-gray-700">بیماری مزمن</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-check">
-                                        <InputCheckbox @bind-Value="factors.NeedsSpecializedHealthcare" class="form-check-input" />
-                                        <label class="form-check-label">نیاز به مراقبت‌های ویژه</label>
+                                <div class="w-full md:w-1/2 px-3">
+                                    <div class="flex items-center gap-2">
+                                        <InputCheckbox @bind-Value="factors.NeedsSpecializedHealthcare" class="rounded h-4 w-4" />
+                                        <label class="text-sm text-gray-700">نیاز به مراقبت‌های ویژه</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- اجتماعی و فرهنگی -->
-                        <div class="section mb-4">
-                            <h4 class="text-primary">🤝 اجتماعی و فرهنگی</h4>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-check">
-                                        <InputCheckbox @bind-Value="factors.HasRelativesAbroad" class="form-check-input" />
-                                        <label class="form-check-label">اقامت خویشاوندان در خارج</label>
+                        <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-blue-600">🤝 اجتماعی و فرهنگی</h4>
+                            <div class="flex flex-wrap -mx-3 gap-3">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <div class="flex items-center gap-2">
+                                        <InputCheckbox @bind-Value="factors.HasRelativesAbroad" class="rounded h-4 w-4" />
+                                        <label class="text-sm text-gray-700">اقامت خویشاوندان در خارج</label>
                                     </div>
                                 </div>
                                 @if (factors.HasRelativesAbroad)
                                 {
-                                    <div class="col-md-6">
-                                        <label class="form-label">کشورهای محل اقامت خویشاوندان</label>
-                                        <InputText @bind-Value="factors.RelativesCountries" class="form-control" placeholder="مثال: کانادا، آلمان" />
+                                    <div class="w-full md:w-1/2 px-3">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">کشورهای محل اقامت خویشاوندان</label>
+                                        <InputText @bind-Value="factors.RelativesCountries" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="مثال: کانادا، آلمان" />
                                     </div>
                                 }
-                                <div class="col-md-6">
-                                    <label class="form-label">ترجیح فرهنگی</label>
-                                    <InputSelect @bind-Value="factors.CulturalPreference" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ترجیح فرهنگی</label>
+                                    <InputSelect @bind-Value="factors.CulturalPreference" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@CulturalPreference.Western">غربی</option>
                                         <option value="@CulturalPreference.Eastern">شرقی</option>
                                         <option value="@CulturalPreference.MiddleEastern">خاورمیانه‌ای</option>
@@ -254,9 +254,9 @@
                                         <option value="@CulturalPreference.NoPreference">بدون ترجیح</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">ترجیح مذهبی</label>
-                                    <InputSelect @bind-Value="factors.ReligionPreference" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ترجیح مذهبی</label>
+                                    <InputSelect @bind-Value="factors.ReligionPreference" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@Models.ReligionPreference.Muslim">مسلمان</option>
                                         <option value="@Models.ReligionPreference.Christian">مسیحی</option>
                                         <option value="@Models.ReligionPreference.Jewish">یهودی</option>
@@ -265,18 +265,18 @@
                                         <option value="@Models.ReligionPreference.Secular">سکولار</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">اهمیت ثبات سیاسی</label>
-                                    <InputSelect @bind-Value="factors.ImportanceOfPoliticalStability" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">اهمیت ثبات سیاسی</label>
+                                    <InputSelect @bind-Value="factors.ImportanceOfPoliticalStability" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@ImportanceOfPoliticalStability.NotImportant">مهم نیست</option>
                                         <option value="@ImportanceOfPoliticalStability.SomewhatImportant">تا حدی مهم</option>
                                         <option value="@ImportanceOfPoliticalStability.Important">مهم</option>
                                         <option value="@ImportanceOfPoliticalStability.VeryImportant">خیلی مهم</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">ترجیح جامعه</label>
-                                    <InputSelect @bind-Value="factors.CommunityPreference" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ترجیح جامعه</label>
+                                    <InputSelect @bind-Value="factors.CommunityPreference" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@CommunityIntegrationPreference.LargeIranianCommunity">جامعه بزرگ ایرانی</option>
                                         <option value="@CommunityIntegrationPreference.SmallIranianCommunity">جامعه کوچک ایرانی</option>
                                         <option value="@CommunityIntegrationPreference.NoPreference">بدون ترجیح</option>
@@ -287,28 +287,28 @@
                         </div>
 
                         <!-- اهداف مهاجرت -->
-                        <div class="section mb-4">
-                            <h4 class="text-primary">🎯 اهداف مهاجرت</h4>
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label">اهداف اصلی (چند مورد انتخاب کنید)</label>
-                                    <div class="row">
+                        <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-blue-600">🎯 اهداف مهاجرت</h4>
+                            <div class="flex flex-wrap -mx-3 gap-3">
+                                <div class="w-full px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">اهداف اصلی (چند مورد انتخاب کنید)</label>
+                                    <div class="flex flex-wrap -mx-3">
                                         @foreach (var goal in Enum.GetValues<MigrationGoal>())
                                         {
-                                            <div class="col-md-4">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" 
+                                            <div class="w-full md:w-1/3 px-3">
+                                                <div class="flex items-center gap-2">
+                                                    <input type="checkbox" class="rounded h-4 w-4" 
                                                            checked="@factors.Goals.Contains(goal)"
                                                            @onchange="@(e => ToggleGoal(goal, (bool)e.Value!))" />
-                                                    <label class="form-check-label">@GetGoalName(goal)</label>
+                                                    <label class="text-sm text-gray-700">@GetGoalName(goal)</label>
                                                 </div>
                                             </div>
                                         }
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">زمان‌بندی ترجیحی</label>
-                                    <InputSelect @bind-Value="factors.PreferredTimeline" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">زمان‌بندی ترجیحی</label>
+                                    <InputSelect @bind-Value="factors.PreferredTimeline" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@MigrationTimeline.Immediate">فوری</option>
                                         <option value="@MigrationTimeline.Within3Months">تا ۳ ماه</option>
                                         <option value="@MigrationTimeline.Within6Months">تا ۶ ماه</option>
@@ -317,22 +317,22 @@
                                         <option value="@MigrationTimeline.Flexible">انعطاف‌پذیر</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-check">
-                                        <InputCheckbox @bind-Value="factors.SeekingCitizenship" class="form-check-input" />
-                                        <label class="form-check-label">به دنبال دریافت تابعیت هستم</label>
+                                <div class="w-full md:w-1/2 px-3">
+                                    <div class="flex items-center gap-2">
+                                        <InputCheckbox @bind-Value="factors.SeekingCitizenship" class="rounded h-4 w-4" />
+                                        <label class="text-sm text-gray-700">به دنبال دریافت تابعیت هستم</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- ترجیحات جغرافیایی -->
-                        <div class="section mb-4">
-                            <h4 class="text-primary">🗺️ ترجیحات جغرافیایی</h4>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">ترجیح آب‌وهوا</label>
-                                    <InputSelect @bind-Value="factors.ClimatePreference" class="form-select">
+                        <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-blue-600">🗺️ ترجیحات جغرافیایی</h4>
+                            <div class="flex flex-wrap -mx-3 gap-3">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ترجیح آب‌وهوا</label>
+                                    <InputSelect @bind-Value="factors.ClimatePreference" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@ClimatePreference.Tropical">گرمسیری</option>
                                         <option value="@ClimatePreference.Temperate">معتدل</option>
                                         <option value="@ClimatePreference.Mediterranean">مدیترانه‌ای</option>
@@ -341,9 +341,9 @@
                                         <option value="@ClimatePreference.NoPreference">بدون ترجیح</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">ترجیح شهری/روستایی</label>
-                                    <InputSelect @bind-Value="factors.UrbanRuralPreference" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ترجیح شهری/روستایی</label>
+                                    <InputSelect @bind-Value="factors.UrbanRuralPreference" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@UrbanRuralPreference.BigCity">شهر بزرگ</option>
                                         <option value="@UrbanRuralPreference.MediumCity">شهر متوسط</option>
                                         <option value="@UrbanRuralPreference.SmallTown">شهر کوچک</option>
@@ -351,9 +351,9 @@
                                         <option value="@UrbanRuralPreference.NoPreference">بدون ترجیح</option>
                                     </InputSelect>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">ترجیح فاصله از ایران</label>
-                                    <InputSelect @bind-Value="factors.DistancePreference" class="form-select">
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ترجیح فاصله از ایران</label>
+                                    <InputSelect @bind-Value="factors.DistancePreference" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                         <option value="@DistanceFromIranPreference.VeryClose">خیلی نزدیک</option>
                                         <option value="@DistanceFromIranPreference.Close">نزدیک</option>
                                         <option value="@DistanceFromIranPreference.Moderate">متوسط</option>
@@ -367,18 +367,18 @@
                         <!-- فرزندان و آموزش -->
                         @if (factors.NumberOfChildren > 0)
                         {
-                            <div class="section mb-4">
-                                <h4 class="text-primary">👨‍👩‍👧‍👦 فرزندان و آموزش</h4>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="form-check">
-                                            <InputCheckbox @bind-Value="factors.ChildrenEducationImportant" class="form-check-input" />
-                                            <label class="form-check-label">آموزش فرزندان برایم مهم است</label>
+                            <div class="bg-gray-50 border-r-4 border-blue-600 rounded-xl p-6 mb-6">
+                                <h4 class="text-blue-600">👨‍👩‍👧‍👦 فرزندان و آموزش</h4>
+                                <div class="flex flex-wrap -mx-3 gap-3">
+                                    <div class="w-full md:w-1/2 px-3">
+                                        <div class="flex items-center gap-2">
+                                            <InputCheckbox @bind-Value="factors.ChildrenEducationImportant" class="rounded h-4 w-4" />
+                                            <label class="text-sm text-gray-700">آموزش فرزندان برایم مهم است</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">سن بزرگترین فرزند</label>
-                                        <InputSelect @bind-Value="factors.EldestChildAge" class="form-select">
+                                    <div class="w-full md:w-1/2 px-3">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">سن بزرگترین فرزند</label>
+                                        <InputSelect @bind-Value="factors.EldestChildAge" class="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                                             <option value="@AgeGroup.Infant">نوزاد (۰-۲)</option>
                                             <option value="@AgeGroup.Child">کودک (۳-۱۲)</option>
                                             <option value="@AgeGroup.Teenager">نوجوان (۱۳-۱۷)</option>
@@ -390,8 +390,8 @@
                             </div>
                         }
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg">
+                        <div class="flex flex-col gap-2">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors">
                                 🔍 دریافت پیشنهادات مهاجرتی
                             </button>
                         </div>

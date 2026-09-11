@@ -7,48 +7,48 @@
 
 <PageTitle>نتایج مشاوره مهاجرت</PageTitle>
 
-<div class="container-fluid py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <div class="card shadow-lg">
-                <div class="card-header bg-success text-white text-center">
+<div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="flex justify-center">
+        <div class="w-full max-w-5xl">
+            <div class="bg-white rounded-2xl shadow-xl">
+                <div class="bg-green-600 text-white text-center rounded-t-2xl py-4 px-6">
                     <h2 class="mb-0">📊 نتایج مشاوره مهاجرت</h2>
                     <p class="mb-0 mt-2">بر اساس اطلاعات شما، این گزینه‌ها پیشنهاد می‌شوند</p>
                 </div>
-                <div class="card-body">
+                <div class="p-6">
                     @if (results == null || !results.Any())
                     {
-                        <div class="alert alert-warning text-center">
+                        <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-xl p-4 text-center">
                             <h4>⚠️ هیچ نتیجه‌ای یافت نشد</h4>
                             <p>لطفاً اطلاعات خود را بازبینی کنید و دوباره تلاش کنید.</p>
-                            <a href="/" class="btn btn-primary">بازگشت به فرم</a>
+                            <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors inline-block">بازگشت به فرم</a>
                         </div>
                     }
                     else
                     {
-                        <div class="results-container">
+                        <div class="space-y-6">
                             @foreach (var plan in results)
                             {
-                                <div class="result-card mb-4">
-                                    <div class="card border-primary">
-                                        <div class="card-header bg-primary text-white">
-                                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="transition-transform hover:-translate-y-1 hover:shadow-lg mb-6">
+                                    <div class="border border-blue-500 rounded-xl">
+                                        <div class="bg-blue-600 text-white rounded-t-xl py-4 px-6">
+                                            <div class="flex justify-between items-center">
                                                 <h3 class="mb-0">
                                                     @plan.Country.FlagEmoji @plan.Country.NamePersian (@plan.Country.Name)
                                                 </h3>
-                                                <div class="score-badge">
-                                                    <span class="badge bg-light text-dark fs-5">
+                                                <div class="text-lg">
+                                                    <span class="bg-white text-gray-800 text-lg px-3 py-1 rounded-full font-semibold">
                                                         امتیاز تطابق: @plan.MatchScore
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="p-6">
                                             <!-- اطلاعات کشور -->
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <h5 class="text-primary">📍 اطلاعات کلی</h5>
-                                                    <ul class="list-unstyled">
+                                            <div class="flex flex-wrap -mx-3 mb-3">
+                                                <div class="w-full md:w-1/2 px-3">
+                                                    <h5 class="text-blue-600">📍 اطلاعات کلی</h5>
+                                                    <ul class="list-none p-0">
                                                         <li><strong>قاره:</strong> @plan.Country.Continent</li>
                                                         <li><strong>فاصله از ایران:</strong> @plan.Country.DistanceFromIranKm کیلومتر</li>
                                                         <li><strong>جمعیت ایرانی:</strong> @plan.Country.IranianPopulation.ToString("N0") نفر</li>
@@ -56,28 +56,28 @@
                                                         <li><strong>تابعیت:</strong> پس از @plan.Country.CitizenshipYears سال</li>
                                                     </ul>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <h5 class="text-primary">📈 امتیازات کشور</h5>
-                                                    <div class="progress mb-2" style="height: 25px;">
-                                                        <div class="progress-bar bg-success" role="progressbar" 
+                                                <div class="w-full md:w-1/2 px-3">
+                                                    <h5 class="text-blue-600">📈 امتیازات کشور</h5>
+                                                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
+                                                        <div class="bg-green-500 h-6 rounded-full flex items-center" role="progressbar" 
                                                              style="width: @plan.Country.QualityOfLifeScore%">
                                                             کیفیت زندگی: @plan.Country.QualityOfLifeScore
                                                         </div>
                                                     </div>
-                                                    <div class="progress mb-2" style="height: 25px;">
-                                                        <div class="progress-bar bg-info" role="progressbar" 
+                                                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
+                                                        <div class="bg-cyan-500 h-6 rounded-full flex items-center" role="progressbar" 
                                                              style="width: @plan.Country.SafetyScore%">
                                                             امنیت: @plan.Country.SafetyScore
                                                         </div>
                                                     </div>
-                                                    <div class="progress mb-2" style="height: 25px;">
-                                                        <div class="progress-bar bg-warning" role="progressbar" 
+                                                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
+                                                        <div class="bg-yellow-500 h-6 rounded-full flex items-center" role="progressbar" 
                                                              style="width: @plan.Country.HealthcareScore%">
                                                             بهداشت: @plan.Country.HealthcareScore
                                                         </div>
                                                     </div>
-                                                    <div class="progress mb-2" style="height: 25px;">
-                                                        <div class="progress-bar bg-primary" role="progressbar" 
+                                                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
+                                                        <div class="bg-blue-500 h-6 rounded-full flex items-center" role="progressbar" 
                                                              style="width: @plan.Country.EducationScore%">
                                                             آموزش: @plan.Country.EducationScore
                                                         </div>
@@ -86,16 +86,16 @@
                                             </div>
 
                                             <!-- ویزای پیشنهادی -->
-                                            <div class="alert alert-info">
-                                                <h5 class="text-primary">🎫 ویزای پیشنهادی</h5>
-                                                <h6 class="fw-bold">@plan.RecommendedVisa.Name</h6>
-                                                <div class="row">
-                                                    <div class="col-md-6">
+                                            <div class="bg-cyan-50 border border-cyan-200 text-cyan-800 rounded-xl p-4">
+                                                <h5 class="text-blue-600">🎫 ویزای پیشنهادی</h5>
+                                                <h6 class="font-bold">@plan.RecommendedVisa.Name</h6>
+                                                <div class="flex flex-wrap -mx-3">
+                                                    <div class="w-full md:w-1/2 px-3">
                                                         <p><strong>نوع:</strong> @plan.RecommendedVisa.Type</p>
                                                         <p><strong>مدت:</strong> @plan.RecommendedVisa.Duration</p>
                                                         <p><strong>زمان پردازش:</strong> @plan.RecommendedVisa.ProcessingTimeMonths ماه</p>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="w-full md:w-1/2 px-3">
                                                         <p><strong>منجر به اقامت دائم:</strong> @(plan.RecommendedVisa.LeadsToPR ? "بله ✓" : "خیر")</p>
                                                         <p><strong>منجر به تابعیت:</strong> @(plan.RecommendedVisa.LeadsToCitizenship ? "بله ✓" : "خیر")</p>
                                                     </div>
@@ -103,20 +103,20 @@
                                             </div>
 
                                             <!-- هزینه‌ها و درآمد -->
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="card bg-light">
-                                                        <div class="card-body text-center">
-                                                            <h6 class="text-muted">هزینه ماهانه تخمینی</h6>
-                                                            <h3 class="text-danger">$@plan.EstimatedMonthlyCostUSD.ToString("N0")</h3>
+                                            <div class="flex flex-wrap -mx-3 mb-3">
+                                                <div class="w-full md:w-1/2 px-3">
+                                                    <div class="bg-gray-100 rounded-xl">
+                                                        <div class="p-6 text-center">
+                                                            <h6 class="text-gray-500">هزینه ماهانه تخمینی</h6>
+                                                            <h3 class="text-red-600">$@plan.EstimatedMonthlyCostUSD.ToString("N0")</h3>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="card bg-light">
-                                                        <div class="card-body text-center">
-                                                            <h6 class="text-muted">درآمد ماهانه متوسط</h6>
-                                                            <h3 class="text-success">$@plan.EstimatedMonthlyIncomeUSD.ToString("N0")</h3>
+                                                <div class="w-full md:w-1/2 px-3">
+                                                    <div class="bg-gray-100 rounded-xl">
+                                                        <div class="p-6 text-center">
+                                                            <h6 class="text-gray-500">درآمد ماهانه متوسط</h6>
+                                                            <h3 class="text-green-600">$@plan.EstimatedMonthlyIncomeUSD.ToString("N0")</h3>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,12 +126,12 @@
                                             @if (plan.Strengths.Any())
                                             {
                                                 <div class="mb-3">
-                                                    <h5 class="text-success">✓ نقاط قوت</h5>
-                                                    <div class="row">
+                                                    <h5 class="text-green-600">✓ نقاط قوت</h5>
+                                                    <div class="flex flex-wrap -mx-3">
                                                         @foreach (var strength in plan.Strengths)
                                                         {
-                                                            <div class="col-md-6">
-                                                                <div class="alert alert-success mb-2 py-2">
+                                                            <div class="w-full md:w-1/2 px-3">
+                                                                <div class="bg-green-50 border border-green-200 text-green-800 rounded-lg p-2 mb-2">
                                                                     @strength
                                                                 </div>
                                                             </div>
@@ -144,12 +144,12 @@
                                             @if (plan.Challenges.Any())
                                             {
                                                 <div class="mb-3">
-                                                    <h5 class="text-warning">⚠ چالش‌ها</h5>
-                                                    <div class="row">
+                                                    <h5 class="text-yellow-600">⚠ چالش‌ها</h5>
+                                                    <div class="flex flex-wrap -mx-3">
                                                         @foreach (var challenge in plan.Challenges)
                                                         {
-                                                            <div class="col-md-6">
-                                                                <div class="alert alert-warning mb-2 py-2">
+                                                            <div class="w-full md:w-1/2 px-3">
+                                                                <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg p-2 mb-2">
                                                                     @challenge
                                                                 </div>
                                                             </div>
@@ -162,11 +162,11 @@
                                             @if (plan.Recommendations.Any())
                                             {
                                                 <div class="mb-3">
-                                                    <h5 class="text-info">💡 توصیه‌ها</h5>
-                                                    <ul class="list-group">
+                                                    <h5 class="text-cyan-600">💡 توصیه‌ها</h5>
+                                                    <ul class="divide-y divide-gray-200 rounded-xl overflow-hidden border border-gray-200">
                                                         @foreach (var rec in plan.Recommendations)
                                                         {
-                                                            <li class="list-group-item list-group-item-info">@rec</li>
+                                                            <li class="bg-cyan-50 text-cyan-800 px-4 py-3">@rec</li>
                                                         }
                                                     </ul>
                                                 </div>
@@ -176,11 +176,11 @@
                                             @if (plan.Steps.Any())
                                             {
                                                 <div class="mb-3">
-                                                    <h5 class="text-primary">📋 مراحل اقدام</h5>
-                                                    <ol class="list-group list-group-numbered">
+                                                    <h5 class="text-blue-600">📋 مراحل اقدام</h5>
+                                                    <ol class="list-decimal list-inside divide-y divide-gray-200 rounded-xl overflow-hidden border border-gray-200">
                                                         @foreach (var step in plan.Steps)
                                                         {
-                                                            <li class="list-group-item">@step</li>
+                                                            <li class="bg-white px-4 py-3">@step</li>
                                                         }
                                                     </ol>
                                                 </div>
@@ -190,14 +190,14 @@
                                             @if (plan.RecommendedVisa.Requirements.Any())
                                             {
                                                 <details class="mb-3">
-                                                    <summary class="btn btn-outline-primary">
+                                                    <summary class="border border-blue-500 text-blue-500 hover:bg-blue-50 font-medium py-2 px-4 rounded-lg transition-colors cursor-pointer inline-block">
                                                         📄 مشاهده نیازمندی‌های ویزا
                                                     </summary>
                                                     <div class="mt-2">
-                                                        <ul class="list-group">
+                                                        <ul class="divide-y divide-gray-200 rounded-xl overflow-hidden border border-gray-200">
                                                             @foreach (var req in plan.RecommendedVisa.Requirements)
                                                             {
-                                                                <li class="list-group-item">@req</li>
+                                                                <li class="bg-white px-4 py-3">@req</li>
                                                             }
                                                         </ul>
                                                     </div>
@@ -208,14 +208,14 @@
                                             @if (plan.RecommendedVisa.Benefits.Any())
                                             {
                                                 <details class="mb-3">
-                                                    <summary class="btn btn-outline-success">
+                                                    <summary class="border border-green-500 text-green-500 hover:bg-green-50 font-medium py-2 px-4 rounded-lg transition-colors cursor-pointer inline-block">
                                                         🎁 مشاهده مزایای ویزا
                                                     </summary>
                                                     <div class="mt-2">
-                                                        <ul class="list-group">
+                                                        <ul class="divide-y divide-gray-200 rounded-xl overflow-hidden border border-gray-200">
                                                             @foreach (var benefit in plan.RecommendedVisa.Benefits)
                                                             {
-                                                                <li class="list-group-item list-group-item-success">@benefit</li>
+                                                                <li class="bg-green-50 text-green-800 px-4 py-3">@benefit</li>
                                                             }
                                                         </ul>
                                                     </div>
@@ -227,8 +227,8 @@
                             }
                         </div>
 
-                        <div class="d-grid gap-2 mt-4">
-                            <a href="/" class="btn btn-secondary btn-lg">
+                        <div class="flex flex-col gap-2 mt-6">
+                            <a href="/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-xl transition-colors text-center">
                                 🔄 بازگشت و ویرایش اطلاعات
                             </a>
                         </div>

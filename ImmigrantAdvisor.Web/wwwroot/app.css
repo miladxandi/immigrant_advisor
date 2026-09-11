@@ -8,16 +8,6 @@ a, .btn-link {
     color: #006bb7;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
 .content {
     padding-top: 1.1rem;
 }
@@ -44,60 +34,6 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
-
-.darker-border-checkbox.form-check-input {
-    border-color: #929292;
-}
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-    color: var(--bs-secondary-color);
-    text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-    text-align: start;
-}
-
-/* RTL Support */
-[dir="rtl"] .form-check {
-    padding-right: 1.5em;
-    padding-left: 0;
-}
-
-[dir="rtl"] .form-check-input {
-    margin-right: -1.5em;
-    margin-left: 0;
-}
-
-[dir="rtl"] .form-select {
-    background-position: left 0.75rem center;
-}
-
-[dir="rtl"] .progress-bar {
-    text-align: right;
-    padding-right: 0.5rem;
-}
-
-.section {
-    border-right: 3px solid #0d6efd;
-    padding-right: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-}
-
-.result-card .card {
-    transition: transform 0.2s;
-}
-
-.result-card .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.score-badge {
-    font-size: 1.2rem;
+.blazor-error-boundary::after {
+    content: "An error has occurred."
 }
