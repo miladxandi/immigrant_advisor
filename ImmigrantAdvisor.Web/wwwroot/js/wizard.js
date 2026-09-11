@@ -116,10 +116,44 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Clear cache after successful form submission
-    if (form) {
-        form.addEventListener('submit', function () {
-            clearFormData();
+    // Clear form button
+    const clearBtn = document.getElementById('clearFormBtn');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+            if (confirm('آیا مطمئن هستید که می‌خواهید تمام اطلاعات فرم را پاک کنید؟')) {
+                clearFormData();
+                // Reset all form fields
+                if (form) {
+                    form.reset();
+                    // Reset visual states
+                    form.querySelectorAll('.goal-checkbox').forEach(cb => {
+                        const label = cb.closest('label');
+                        if (label) {
+                            label.classList.remove('border-indigo-500', 'bg-indigo-50', 'text-indigo-700');
+                            label.classList.add('border-gray-200', 'text-gray-600');
+                        }
+                    });
+                    form.querySelectorAll('.card-checkbox').forEach(cb => {
+                        const label = cb.closest('label');
+                        if (label) {
+                            const activeClass = label.dataset.activeClass || 'border-indigo-500 bg-indigo-50';
+                            const inactiveClass = label.dataset.inactiveClass || 'border-gray-200';
+                            label.classList.remove(...activeClass.split(' '));
+                            label.classList.add(...inactiveClass.split(' '));
+                        }
+                    });
+                    // Hide conditional fields
+                    const marriedFields = document.getElementById('marriedFields');
+                    if (marriedFields) marriedFields.style.display = 'none';
+                    const relativesFields = document.getElementById('relativesFields');
+                    if (relativesFields) relativesFields.style.display = 'none';
+                    const childrenFields = document.getElementById('childrenFields');
+                    if (childrenFields) childrenFields.style.display = 'none';
+                }
+                // Go back to step 1
+                currentStep = 0;
+                updateUI();
+            }
         });
     }
 
