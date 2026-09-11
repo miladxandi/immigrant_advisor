@@ -1,4 +1,5 @@
 @page "/"
+@rendermode InteractiveServer
 @using ImmigrantAdvisor.Shared.Models
 @using ImmigrantAdvisor.Shared.Services
 @inject ImmigrationAdvisorService AdvisorService
@@ -70,7 +71,7 @@
                         <StepSection Icon="👤" Title="اطلاعات شخصی" Subtitle="اطلاعات پایه خود را وارد کنید">
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                                 <FormField Label="سن" Icon="🎂">
-                                    <InputNumber @bind-Value="factors.Age" class="wizard-input" min="18" max="80" placeholder="مثلاً ۳۰" />
+                                    <InputNumber @bind-Value="factors.Age" class="wizard-input ltr-input" min="18" max="80" placeholder="مثلاً 30" />
                                 </FormField>
                                 <FormField Label="جنسیت" Icon="👤">
                                     <InputSelect @bind-Value="factors.Gender" class="wizard-input">
@@ -92,7 +93,7 @@
                             {
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 p-4 bg-indigo-50/50 rounded-xl border border-indigo-100">
                                     <FormField Label="تعداد فرزندان" Icon="👶">
-                                        <InputNumber @bind-Value="factors.NumberOfChildren" class="wizard-input" min="0" max="10" />
+                                        <InputNumber @bind-Value="factors.NumberOfChildren" class="wizard-input ltr-input" min="0" max="10" />
                                     </FormField>
                                     <FormField Label="همسر شاغل است؟" Icon="💼">
                                         <InputSelect @bind-Value="factors.SpouseWorking" class="wizard-input">
@@ -172,7 +173,7 @@
                                     <InputText @bind-Value="factors.Occupation" class="wizard-input" placeholder="مثال: مهندس نرم‌افزار" />
                                 </FormField>
                                 <FormField Label="سابقه کار (سال)" Icon="📅">
-                                    <InputNumber @bind-Value="factors.YearsOfExperience" class="wizard-input" min="0" max="50" />
+                                    <InputNumber @bind-Value="factors.YearsOfExperience" class="wizard-input ltr-input" min="0" max="50" />
                                 </FormField>
                                 <FormField Label="نوع اشتغال" Icon="📋">
                                     <InputSelect @bind-Value="factors.CurrentEmployment" class="wizard-input">
@@ -186,7 +187,7 @@
                                     </InputSelect>
                                 </FormField>
                                 <FormField Label="درآمد سالانه (دلار)" Icon="💵">
-                                    <InputNumber @bind-Value="factors.AnnualIncomeUSD" class="wizard-input" min="0" step="1000" placeholder="مثلاً 25000" />
+                                    <InputNumber @bind-Value="factors.AnnualIncomeUSD" class="wizard-input ltr-input" min="0" step="1000" placeholder="مثلاً 25000" />
                                 </FormField>
                             </div>
                         </StepSection>
@@ -198,10 +199,10 @@
                         <StepSection Icon="💰" Title="وضعیت مالی" Subtitle="اطلاعات مالی شما برای پیشنهاد بهترین ویزا">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <FormField Label="ارزش خالص دارایی‌ها (دلار)" Icon="🏠">
-                                    <InputNumber @bind-Value="factors.NetWorthUSD" class="wizard-input" min="0" step="10000" placeholder="مثلاً 200000" />
+                                    <InputNumber @bind-Value="factors.NetWorthUSD" class="wizard-input ltr-input" min="0" step="10000" placeholder="مثلاً 200000" />
                                 </FormField>
                                 <FormField Label="پس‌انداز سالانه (دلار)" Icon="🏦">
-                                    <InputNumber @bind-Value="factors.AnnualSavingsUSD" class="wizard-input" min="0" step="5000" placeholder="مثلاً 10000" />
+                                    <InputNumber @bind-Value="factors.AnnualSavingsUSD" class="wizard-input ltr-input" min="0" step="5000" placeholder="مثلاً 10000" />
                                 </FormField>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
