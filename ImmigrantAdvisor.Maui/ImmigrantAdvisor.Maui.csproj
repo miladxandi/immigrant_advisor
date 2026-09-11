@@ -14,7 +14,7 @@
     <WindowsPackageType>None</WindowsPackageType>
 
     <ApplicationTitle>مشاور مهاجرت</ApplicationTitle>
-    <ApplicationId>com.immigrantadvisor.app</ApplicationId>
+    <ApplicationId>ir.miladzandi.imad</ApplicationId>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
 
@@ -37,6 +37,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-rc.1.*" />
   </ItemGroup>
 
