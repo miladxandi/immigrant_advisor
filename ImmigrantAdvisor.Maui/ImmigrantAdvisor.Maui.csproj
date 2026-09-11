@@ -10,6 +10,7 @@
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <WindowsPackageType>None</WindowsPackageType>
 
     <ApplicationTitle>مشاور مهاجرت</ApplicationTitle>
     <ApplicationId>com.immigrantadvisor.app</ApplicationId>
@@ -36,6 +37,10 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-rc.1.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>

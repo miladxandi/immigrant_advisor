@@ -1,6 +1,12 @@
 using ImmigrantAdvisor.Shared.Services;
+using ImmigrantAdvisor.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseStaticWebAssets();
+
+// Railway / container platforms assign a dynamic PORT via env var
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://+:{port}");
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

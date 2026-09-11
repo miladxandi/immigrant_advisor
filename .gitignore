@@ -3,6 +3,7 @@ obj/
 *.user
 *.suo
 .vs/
+.idea/
 *.cache
 .DS_Store
 Thumbs.db
