@@ -1,0 +1,452 @@
+@page "/"
+@using ImmigrantAdvisor.Web.Models
+@using ImmigrantAdvisor.Web.Services
+@inject ImmigrationAdvisorService AdvisorService
+@inject AppStateService AppState
+@inject NavigationManager NavigationManager
+
+<PageTitle>مشاور مهاجرت هوشمند</PageTitle>
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">🌍 مشاور مهاجرت هوشمند</h2>
+                    <p class="mb-0 mt-2">اطلاعات خود را وارد کنید تا بهترین گزینه‌های مهاجرتی را به شما پیشنهاد دهیم</p>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="@factors" OnValidSubmit="@HandleSubmit" FormName="ImmigrationForm">
+                        <DataAnnotationsValidator />
+                        
+                        <!-- اطلاعات شخصی -->
+                        <div class="section mb-4">
+                            <h4 class="text-primary">👤 اطلاعات شخصی</h4>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">سن</label>
+                                    <InputNumber @bind-Value="factors.Age" class="form-control" min="18" max="80" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">جنسیت</label>
+                                    <InputSelect @bind-Value="factors.Gender" class="form-select">
+                                        <option value="@Gender.Male">مرد</option>
+                                        <option value="@Gender.Female">زن</option>
+                                        <option value="@Gender.PreferNotToSay">ترجیح می‌دهم نگویم</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">وضعیت تأهل</label>
+                                    <InputSelect @bind-Value="factors.MaritalStatus" class="form-select">
+                                        <option value="@MaritalStatus.Single">مجرد</option>
+                                        <option value="@MaritalStatus.Married">متأهل</option>
+                                        <option value="@MaritalStatus.Divorced">مطلقه</option>
+                                        <option value="@MaritalStatus.Widowed">همسر فوت شده</option>
+                                    </InputSelect>
+                                </div>
+                                @if (factors.MaritalStatus == MaritalStatus.Married)
+                                {
+                                    <div class="col-md-6">
+                                        <label class="form-label">تعداد فرزندان</label>
+                                        <InputNumber @bind-Value="factors.NumberOfChildren" class="form-control" min="0" max="10" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">همسر شاغل است؟</label>
+                                        <InputSelect @bind-Value="factors.SpouseWorking" class="form-select">
+                                            <option value="true">بله</option>
+                                            <option value="false">خیر</option>
+                                        </InputSelect>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- تحصیلات و زبان -->
+                        <div class="section mb-4">
+                            <h4 class="text-primary">🎓 تحصیلات و زبان</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">مقطع تحصیلی</label>
+                                    <InputSelect @bind-Value="factors.Education" class="form-select">
+                                        <option value="@EducationLevel.NoFormalEducation">بدون تحصیلات رسمی</option>
+                                        <option value="@EducationLevel.HighSchool">دیپلم</option>
+                                        <option value="@EducationLevel.AssociateDegree">فوق دیپلم</option>
+                                        <option value="@EducationLevel.BachelorDegree">لیسانس</option>
+                                        <option value="@EducationLevel.MasterDegree">فوق لیسانس</option>
+                                        <option value="@EducationLevel.PhD">دکترا</option>
+                                        <option value="@EducationLevel.PostDoctoral">پسادکترا</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">رشته تحصیلی</label>
+                                    <InputText @bind-Value="factors.FieldOfStudy" class="form-control" placeholder="مثال: مهندسی کامپیوتر" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">سطح زبان انگلیسی</label>
+                                    <InputSelect @bind-Value="factors.EnglishLevel" class="form-select">
+                                        <option value="@LanguageProficiency.None">هیچ</option>
+                                        <option value="@LanguageProficiency.Basic">مقدماتی</option>
+                                        <option value="@LanguageProficiency.Intermediate">متوسط</option>
+                                        <option value="@LanguageProficiency.Advanced">پیشرفته</option>
+                                        <option value="@LanguageProficiency.Native">مادری</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">سطح زبان فرانسوی</label>
+                                    <InputSelect @bind-Value="factors.FrenchLevel" class="form-select">
+                                        <option value="@LanguageProficiency.None">هیچ</option>
+                                        <option value="@LanguageProficiency.Basic">مقدماتی</option>
+                                        <option value="@LanguageProficiency.Intermediate">متوسط</option>
+                                        <option value="@LanguageProficiency.Advanced">پیشرفته</option>
+                                        <option value="@LanguageProficiency.Native">مادری</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">سطح زبان آلمانی</label>
+                                    <InputSelect @bind-Value="factors.GermanLevel" class="form-select">
+                                        <option value="@LanguageProficiency.None">هیچ</option>
+                                        <option value="@LanguageProficiency.Basic">مقدماتی</option>
+                                        <option value="@LanguageProficiency.Intermediate">متوسط</option>
+                                        <option value="@LanguageProficiency.Advanced">پیشرفته</option>
+                                        <option value="@LanguageProficiency.Native">مادری</option>
+                                    </InputSelect>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- شغل و تخصص -->
+                        <div class="section mb-4">
+                            <h4 class="text-primary">💼 شغل و تخصص</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">شغل فعلی</label>
+                                    <InputText @bind-Value="factors.Occupation" class="form-control" placeholder="مثال: مهندس نرم‌افزار" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">سابقه کار (سال)</label>
+                                    <InputNumber @bind-Value="factors.YearsOfExperience" class="form-control" min="0" max="50" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">نوع اشتغال</label>
+                                    <InputSelect @bind-Value="factors.CurrentEmployment" class="form-select">
+                                        <option value="@EmploymentType.Unemployed">بیکار</option>
+                                        <option value="@EmploymentType.PartTime">پاره‌وقت</option>
+                                        <option value="@EmploymentType.FullTime">تمام‌وقت</option>
+                                        <option value="@EmploymentType.SelfEmployed">خوداشتغال</option>
+                                        <option value="@EmploymentType.BusinessOwner">صاحب کسب‌وکار</option>
+                                        <option value="@EmploymentType.Retired">بازنشسته</option>
+                                        <option value="@EmploymentType.Student">دانشجو</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">درآمد سالانه (دلار)</label>
+                                    <InputNumber @bind-Value="factors.AnnualIncomeUSD" class="form-control" min="0" step="1000" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- وضعیت مالی -->
+                        <div class="section mb-4">
+                            <h4 class="text-primary">💰 وضعیت مالی</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">ارزش خالص دارایی‌ها (دلار)</label>
+                                    <InputNumber @bind-Value="factors.NetWorthUSD" class="form-control" min="0" step="10000" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">پس‌انداز سالانه (دلار)</label>
+                                    <InputNumber @bind-Value="factors.AnnualSavingsUSD" class="form-control" min="0" step="5000" />
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <InputCheckbox @bind-Value="factors.HasInvestmentProperty" class="form-check-input" />
+                                        <label class="form-check-label">مالکیت ملک سرمایه‌گذاری</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <InputCheckbox @bind-Value="factors.HasBusinessOwnership" class="form-check-input" />
+                                        <label class="form-check-label">مالکیت کسب‌وکار</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- سلامت و روان -->
+                        <div class="section mb-4">
+                            <h4 class="text-primary">🏥 سلامت جسمی و روانی</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">سلامت جسمی</label>
+                                    <InputSelect @bind-Value="factors.PhysicalHealth" class="form-select">
+                                        <option value="@PhysicalHealthStatus.Excellent">عالی</option>
+                                        <option value="@PhysicalHealthStatus.Good">خوب</option>
+                                        <option value="@PhysicalHealthStatus.Fair">متوسط</option>
+                                        <option value="@PhysicalHealthStatus.Poor">ضعیف</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">سلامت روانی</label>
+                                    <InputSelect @bind-Value="factors.MentalHealth" class="form-select">
+                                        <option value="@MentalHealthStatus.Excellent">عالی</option>
+                                        <option value="@MentalHealthStatus.Good">خوب</option>
+                                        <option value="@MentalHealthStatus.Fair">متوسط</option>
+                                        <option value="@MentalHealthStatus.NeedsSupport">نیاز به حمایت</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">تحمل استرس</label>
+                                    <InputSelect @bind-Value="factors.StressTolerance" class="form-select">
+                                        <option value="@StressToleranceLevel.Low">کم</option>
+                                        <option value="@StressToleranceLevel.Medium">متوسط</option>
+                                        <option value="@StressToleranceLevel.High">بالا</option>
+                                        <option value="@StressToleranceLevel.VeryHigh">خیلی بالا</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">انعطاف‌پذیری و سازگاری</label>
+                                    <InputSelect @bind-Value="factors.Adaptability" class="form-select">
+                                        <option value="@AdaptabilityLevel.Low">کم</option>
+                                        <option value="@AdaptabilityLevel.Medium">متوسط</option>
+                                        <option value="@AdaptabilityLevel.High">بالا</option>
+                                        <option value="@AdaptabilityLevel.VeryHigh">خیلی بالا</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <InputCheckbox @bind-Value="factors.HasChronicDisease" class="form-check-input" />
+                                        <label class="form-check-label">بیماری مزمن</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <InputCheckbox @bind-Value="factors.NeedsSpecializedHealthcare" class="form-check-input" />
+                                        <label class="form-check-label">نیاز به مراقبت‌های ویژه</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- اجتماعی و فرهنگی -->
+                        <div class="section mb-4">
+                            <h4 class="text-primary">🤝 اجتماعی و فرهنگی</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <InputCheckbox @bind-Value="factors.HasRelativesAbroad" class="form-check-input" />
+                                        <label class="form-check-label">اقامت خویشاوندان در خارج</label>
+                                    </div>
+                                </div>
+                                @if (factors.HasRelativesAbroad)
+                                {
+                                    <div class="col-md-6">
+                                        <label class="form-label">کشورهای محل اقامت خویشاوندان</label>
+                                        <InputText @bind-Value="factors.RelativesCountries" class="form-control" placeholder="مثال: کانادا، آلمان" />
+                                    </div>
+                                }
+                                <div class="col-md-6">
+                                    <label class="form-label">ترجیح فرهنگی</label>
+                                    <InputSelect @bind-Value="factors.CulturalPreference" class="form-select">
+                                        <option value="@CulturalPreference.Western">غربی</option>
+                                        <option value="@CulturalPreference.Eastern">شرقی</option>
+                                        <option value="@CulturalPreference.MiddleEastern">خاورمیانه‌ای</option>
+                                        <option value="@CulturalPreference.Multicultural">چندفرهنگی</option>
+                                        <option value="@CulturalPreference.NoPreference">بدون ترجیح</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">ترجیح مذهبی</label>
+                                    <InputSelect @bind-Value="factors.ReligionPreference" class="form-select">
+                                        <option value="@Models.ReligionPreference.Muslim">مسلمان</option>
+                                        <option value="@Models.ReligionPreference.Christian">مسیحی</option>
+                                        <option value="@Models.ReligionPreference.Jewish">یهودی</option>
+                                        <option value="@Models.ReligionPreference.Other">سایر</option>
+                                        <option value="@Models.ReligionPreference.NoPreference">بدون ترجیح</option>
+                                        <option value="@Models.ReligionPreference.Secular">سکولار</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">اهمیت ثبات سیاسی</label>
+                                    <InputSelect @bind-Value="factors.ImportanceOfPoliticalStability" class="form-select">
+                                        <option value="@ImportanceOfPoliticalStability.NotImportant">مهم نیست</option>
+                                        <option value="@ImportanceOfPoliticalStability.SomewhatImportant">تا حدی مهم</option>
+                                        <option value="@ImportanceOfPoliticalStability.Important">مهم</option>
+                                        <option value="@ImportanceOfPoliticalStability.VeryImportant">خیلی مهم</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">ترجیح جامعه</label>
+                                    <InputSelect @bind-Value="factors.CommunityPreference" class="form-select">
+                                        <option value="@CommunityIntegrationPreference.LargeIranianCommunity">جامعه بزرگ ایرانی</option>
+                                        <option value="@CommunityIntegrationPreference.SmallIranianCommunity">جامعه کوچک ایرانی</option>
+                                        <option value="@CommunityIntegrationPreference.NoPreference">بدون ترجیح</option>
+                                        <option value="@CommunityIntegrationPreference.PreferDiverseCommunity">ترجیح جامعه متنوع</option>
+                                    </InputSelect>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- اهداف مهاجرت -->
+                        <div class="section mb-4">
+                            <h4 class="text-primary">🎯 اهداف مهاجرت</h4>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label">اهداف اصلی (چند مورد انتخاب کنید)</label>
+                                    <div class="row">
+                                        @foreach (var goal in Enum.GetValues<MigrationGoal>())
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" 
+                                                           checked="@factors.Goals.Contains(goal)"
+                                                           @onchange="@(e => ToggleGoal(goal, (bool)e.Value!))" />
+                                                    <label class="form-check-label">@GetGoalName(goal)</label>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">زمان‌بندی ترجیحی</label>
+                                    <InputSelect @bind-Value="factors.PreferredTimeline" class="form-select">
+                                        <option value="@MigrationTimeline.Immediate">فوری</option>
+                                        <option value="@MigrationTimeline.Within3Months">تا ۳ ماه</option>
+                                        <option value="@MigrationTimeline.Within6Months">تا ۶ ماه</option>
+                                        <option value="@MigrationTimeline.Within1Year">تا ۱ سال</option>
+                                        <option value="@MigrationTimeline.Within2Years">تا ۲ سال</option>
+                                        <option value="@MigrationTimeline.Flexible">انعطاف‌پذیر</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <InputCheckbox @bind-Value="factors.SeekingCitizenship" class="form-check-input" />
+                                        <label class="form-check-label">به دنبال دریافت تابعیت هستم</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ترجیحات جغرافیایی -->
+                        <div class="section mb-4">
+                            <h4 class="text-primary">🗺️ ترجیحات جغرافیایی</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">ترجیح آب‌وهوا</label>
+                                    <InputSelect @bind-Value="factors.ClimatePreference" class="form-select">
+                                        <option value="@ClimatePreference.Tropical">گرمسیری</option>
+                                        <option value="@ClimatePreference.Temperate">معتدل</option>
+                                        <option value="@ClimatePreference.Mediterranean">مدیترانه‌ای</option>
+                                        <option value="@ClimatePreference.Continental">قاره‌ای</option>
+                                        <option value="@ClimatePreference.Cold">سرد</option>
+                                        <option value="@ClimatePreference.NoPreference">بدون ترجیح</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">ترجیح شهری/روستایی</label>
+                                    <InputSelect @bind-Value="factors.UrbanRuralPreference" class="form-select">
+                                        <option value="@UrbanRuralPreference.BigCity">شهر بزرگ</option>
+                                        <option value="@UrbanRuralPreference.MediumCity">شهر متوسط</option>
+                                        <option value="@UrbanRuralPreference.SmallTown">شهر کوچک</option>
+                                        <option value="@UrbanRuralPreference.Rural">روستا</option>
+                                        <option value="@UrbanRuralPreference.NoPreference">بدون ترجیح</option>
+                                    </InputSelect>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">ترجیح فاصله از ایران</label>
+                                    <InputSelect @bind-Value="factors.DistancePreference" class="form-select">
+                                        <option value="@DistanceFromIranPreference.VeryClose">خیلی نزدیک</option>
+                                        <option value="@DistanceFromIranPreference.Close">نزدیک</option>
+                                        <option value="@DistanceFromIranPreference.Moderate">متوسط</option>
+                                        <option value="@DistanceFromIranPreference.Far">دور</option>
+                                        <option value="@DistanceFromIranPreference.NoPreference">بدون ترجیح</option>
+                                    </InputSelect>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- فرزندان و آموزش -->
+                        @if (factors.NumberOfChildren > 0)
+                        {
+                            <div class="section mb-4">
+                                <h4 class="text-primary">👨‍👩‍👧‍👦 فرزندان و آموزش</h4>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <InputCheckbox @bind-Value="factors.ChildrenEducationImportant" class="form-check-input" />
+                                            <label class="form-check-label">آموزش فرزندان برایم مهم است</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">سن بزرگترین فرزند</label>
+                                        <InputSelect @bind-Value="factors.EldestChildAge" class="form-select">
+                                            <option value="@AgeGroup.Infant">نوزاد (۰-۲)</option>
+                                            <option value="@AgeGroup.Child">کودک (۳-۱۲)</option>
+                                            <option value="@AgeGroup.Teenager">نوجوان (۱۳-۱۷)</option>
+                                            <option value="@AgeGroup.YoungAdult">جوان (۱۸-۲۵)</option>
+                                            <option value="@AgeGroup.Adult">بزرگسال (+۲۵)</option>
+                                        </InputSelect>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                🔍 دریافت پیشنهادات مهاجرتی
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private UserFactors factors = new();
+    
+    protected override void OnInitialized()
+    {
+        // Load from AppState if exists
+        if (AppState.UserFactors.Age > 0)
+        {
+            factors = AppState.UserFactors;
+        }
+    }
+
+    private void ToggleGoal(MigrationGoal goal, bool isChecked)
+    {
+        if (isChecked && !factors.Goals.Contains(goal))
+        {
+            factors.Goals.Add(goal);
+        }
+        else if (!isChecked && factors.Goals.Contains(goal))
+        {
+            factors.Goals.Remove(goal);
+        }
+    }
+
+    private string GetGoalName(MigrationGoal goal) => goal switch
+    {
+        MigrationGoal.BetterEconomicOpportunities => "فرصت‌های اقتصادی بهتر",
+        MigrationGoal.HigherQualityOfLife => "کیفیت زندگی بالاتر",
+        MigrationGoal.Education => "آموزش و تحصیل",
+        MigrationGoal.CareerGrowth => "رشد شغلی",
+        MigrationGoal.FamilyReunification => "پیوند مجدد خانواده",
+        MigrationGoal.PoliticalStability => "ثبات سیاسی",
+        MigrationGoal.Safety => "امنیت",
+        MigrationGoal.Healthcare => "بهداشت و درمان",
+        MigrationGoal.Retirement => "بازنشستگی",
+        MigrationGoal.BusinessExpansion => "توسعه کسب‌وکار",
+        MigrationGoal.CulturalExperience => "تجربه فرهنگی",
+        _ => goal.ToString()
+    };
+
+    private void HandleSubmit()
+    {
+        // Save to AppState
+        AppState.UserFactors = factors;
+        AppState.Results = AdvisorService.GetRecommendations(factors);
+        NavigationManager.NavigateTo("/results");
+    }
+}
