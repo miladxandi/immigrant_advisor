@@ -1,6 +1,6 @@
-using ImmigrantAdvisor.Web.Models;
+using ImmigrantAdvisor.Shared.Models;
 
-namespace ImmigrantAdvisor.Web.Data;
+namespace ImmigrantAdvisor.Shared.Data;
 
 public static class CountryData
 {

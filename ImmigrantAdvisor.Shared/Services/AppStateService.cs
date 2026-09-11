@@ -1,6 +1,6 @@
-using ImmigrantAdvisor.Web.Models;
+using ImmigrantAdvisor.Shared.Models;
 
-namespace ImmigrantAdvisor.Web.Services;
+namespace ImmigrantAdvisor.Shared.Services;
 
 public class AppStateService
 {

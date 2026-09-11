@@ -1,4 +1,4 @@
-namespace ImmigrantAdvisor.Web.Models;
+namespace ImmigrantAdvisor.Shared.Models;
 
 public class UserFactors
 {

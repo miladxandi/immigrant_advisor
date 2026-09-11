@@ -1,7 +1,7 @@
-using ImmigrantAdvisor.Web.Models;
-using ImmigrantAdvisor.Web.Data;
+using ImmigrantAdvisor.Shared.Models;
+using ImmigrantAdvisor.Shared.Data;
 
-namespace ImmigrantAdvisor.Web.Services;
+namespace ImmigrantAdvisor.Shared.Services;
 
 public class ImmigrationAdvisorService
 {

@@ -1,5 +1,4 @@
-using ImmigrantAdvisor.Web.Components;
-using ImmigrantAdvisor.Web.Services;
+using ImmigrantAdvisor.Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
