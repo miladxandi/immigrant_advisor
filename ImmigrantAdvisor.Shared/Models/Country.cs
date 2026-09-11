@@ -50,6 +50,10 @@ public class Country
     
     // محدودیت‌ها
     public List<string> Restrictions { get; set; } = new();
+    
+    // نسخه داده
+    public string DataVersion { get; set; } = "2026.08";
+    public string LastUpdated { get; set; } = "2026-09-01";
 }
 
 public class VisaOption
