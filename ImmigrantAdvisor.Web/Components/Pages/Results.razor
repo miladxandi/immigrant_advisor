@@ -1,9 +1,6 @@
 @page "/results"
-@rendermode InteractiveServer
 @using ImmigrantAdvisor.Shared.Models
 @using ImmigrantAdvisor.Shared.Services
-@inject ImmigrationAdvisorService AdvisorService
-@inject AppStateService AppState
 @inject NavigationManager NavigationManager
 
 <PageTitle>نتایج مشاوره مهاجرت</PageTitle>
@@ -255,8 +252,8 @@
 
     protected override void OnInitialized()
     {
-        results = AppState.Results;
-        if (results == null || !results.Any())
+        results = ResultsDataHolder.LatestResults ?? new();
+        if (!results.Any())
         {
             NavigationManager.NavigateTo("/");
         }
