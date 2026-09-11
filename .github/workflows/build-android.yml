@@ -40,8 +40,8 @@ jobs:
       env:
         KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       run: |
-        echo "$KEYSTORE_BASE64" | base64 --decode > miladxandi.keystore
-      working-directory: .
+        echo "$KEYSTORE_BASE64" | base64 --decode > ${{ github.workspace }}/miladxandi.keystore
+        ls -la ${{ github.workspace }}/miladxandi.keystore
 
     - name: Build Android APK (Unsigned for PR)
       if: github.event_name == 'pull_request'
@@ -65,7 +65,7 @@ jobs:
           -o ./publish \
           -p:AndroidPackageFormat=apk \
           -p:AndroidKeyStore=true \
-          -p:AndroidSigningKeyStore=miladxandi.keystore \
+          -p:AndroidSigningKeyStore=${{ github.workspace }}/miladxandi.keystore \
           -p:AndroidSigningKeyAlias=$KEYSTORE_ALIAS \
           -p:AndroidSigningKeyPass=$KEY_PASSWORD \
           -p:AndroidSigningStorePass=$KEYSTORE_PASSWORD
