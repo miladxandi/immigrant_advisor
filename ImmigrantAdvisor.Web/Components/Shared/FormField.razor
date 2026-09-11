@@ -1,0 +1,16 @@
+<div class="form-field">
+    <label class="block text-sm font-medium text-gray-600 mb-1.5">
+        @if (!string.IsNullOrEmpty(Icon))
+        {
+            <span class="ml-1">@Icon</span>
+        }
+        @Label
+    </label>
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public string Icon { get; set; } = "";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

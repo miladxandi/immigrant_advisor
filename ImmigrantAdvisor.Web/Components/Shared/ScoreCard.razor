@@ -1,0 +1,31 @@
+<div class="text-center">
+    <div class="relative w-full bg-gray-100 rounded-full h-2 mb-1.5">
+        <div class="h-2 rounded-full transition-all duration-700 @GetBgColor" style="width: @(Score)%"></div>
+    </div>
+    <p class="text-xs text-gray-500">@Label</p>
+    <p class="text-sm font-bold @GetTextColor">@Score</p>
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public int Score { get; set; }
+    [Parameter] public string Color { get; set; } = "blue";
+
+    private string GetBgColor => Color switch
+    {
+        "green" => "bg-green-500",
+        "blue" => "bg-blue-500",
+        "yellow" => "bg-yellow-500",
+        "purple" => "bg-purple-500",
+        _ => "bg-indigo-500"
+    };
+
+    private string GetTextColor => Color switch
+    {
+        "green" => "text-green-600",
+        "blue" => "text-blue-600",
+        "yellow" => "text-yellow-600",
+        "purple" => "text-purple-600",
+        _ => "text-indigo-600"
+    };
+}

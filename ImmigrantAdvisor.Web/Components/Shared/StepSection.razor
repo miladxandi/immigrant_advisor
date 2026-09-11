@@ -1,0 +1,19 @@
+<div class="wizard-step">
+    <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-gradient-to-bl from-indigo-500 to-violet-600 text-white rounded-xl flex items-center justify-center text-xl shadow-lg shadow-indigo-200">
+            @Icon
+        </div>
+        <div>
+            <h3 class="text-lg font-bold text-gray-800">@Title</h3>
+            <p class="text-sm text-gray-400">@Subtitle</p>
+        </div>
+    </div>
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public string Icon { get; set; } = "";
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string Subtitle { get; set; } = "";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
