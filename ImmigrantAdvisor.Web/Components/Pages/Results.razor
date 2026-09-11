@@ -185,13 +185,13 @@
                                         <span class="w-6 h-6 bg-indigo-100 rounded-lg flex items-center justify-center text-xs">📋</span>
                                         مراحل اقدام
                                     </h5>
-                                    <div class="relative">
+                                    <div>
                                         @for (int i = 0; i < plan.Steps.Count; i++)
                                         {
                                             var step = plan.Steps[i];
-                                            <div class="flex gap-3 pb-4">
-                                                <div class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">@(i + 1)</div>
-                                                <div class="text-sm text-gray-600 pt-1.5">@step</div>
+                                            <div class="flex items-start gap-2 pb-3">
+                                                <div class="w-7 h-7 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">@(i + 1)</div>
+                                                <div class="text-sm text-gray-600 pt-0.5">@step</div>
                                             </div>
                                         }
                                     </div>
