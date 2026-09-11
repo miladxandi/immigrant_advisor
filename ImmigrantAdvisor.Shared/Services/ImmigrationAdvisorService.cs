@@ -218,6 +218,38 @@ public class ImmigrationAdvisorService
         else if (factors.PreferredTimeline == MigrationTimeline.Within6Months && visa.ProcessingTimeMonths <= 9)
             score += 8;
 
+        // تطابق نوع ویزا با اهداف کاربر
+        bool isStudentVisa = visa.Name.Contains("تحصیلی") || visa.Name.Contains("Student") || visa.Name.Contains("F-1");
+        bool isWorkVisa = visa.Name.Contains("کار") || visa.Name.Contains("Work") || visa.Name.Contains("Skilled") || visa.Name.Contains("H-1B") || visa.Name.Contains("بلوکارت") || visa.Name.Contains("Blue Card");
+        bool isInvestmentVisa = visa.MinInvestmentUSD > 0 || visa.Name.Contains("سرمایه‌گذاری") || visa.Name.Contains("Investment") || visa.Name.Contains("Golden") || visa.Name.Contains("طلایی");
+        bool isNomadVisa = visa.Name.Contains("فریلنسر") || visa.Name.Contains("Digital Nomad") || visa.Name.Contains("خوداشتغال") || visa.Name.Contains("Nomad");
+
+        if (isStudentVisa)
+        {
+            if (factors.Goals.Contains(MigrationGoal.Education))
+                score += 30; // کاربر دنبال تحصیله
+            else
+                score -= 40; // کاربر دنبال تحصیل نیست → جریمه سنگین
+        }
+
+        if (isWorkVisa)
+        {
+            if (factors.Goals.Contains(MigrationGoal.BetterEconomicOpportunities) || factors.Goals.Contains(MigrationGoal.CareerGrowth))
+                score += 25;
+        }
+
+        if (isInvestmentVisa)
+        {
+            if (factors.Goals.Contains(MigrationGoal.BusinessExpansion))
+                score += 25;
+        }
+
+        if (isNomadVisa)
+        {
+            if (factors.CurrentEmployment == EmploymentType.SelfEmployed || factors.CurrentEmployment == EmploymentType.BusinessOwner)
+                score += 15;
+        }
+
         // امتیاز بر اساس مزایا
         score += visa.Benefits.Count * 2;
 
