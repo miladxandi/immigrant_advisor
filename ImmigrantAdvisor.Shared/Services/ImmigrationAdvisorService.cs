@@ -37,126 +37,225 @@ public class ImmigrationAdvisorService
     {
         int score = 0;
 
-        // امتیاز بر اساس اهداف مهاجرت
+        // ═══ اهداف مهاجرت (مهم‌ترین فاکتور) ═══
         if (factors.Goals.Contains(MigrationGoal.BetterEconomicOpportunities))
-            score += country.EconomicOpportunityScore / 2;
+            score += country.EconomicOpportunityScore * 2 / 3;
         
         if (factors.Goals.Contains(MigrationGoal.HigherQualityOfLife))
-            score += country.QualityOfLifeScore / 2;
+            score += country.QualityOfLifeScore * 2 / 3;
         
         if (factors.Goals.Contains(MigrationGoal.Education))
-            score += country.EducationScore / 2;
+            score += country.EducationScore * 2 / 3;
         
         if (factors.Goals.Contains(MigrationGoal.Healthcare))
-            score += country.HealthcareScore / 2;
+            score += country.HealthcareScore * 2 / 3;
         
         if (factors.Goals.Contains(MigrationGoal.PoliticalStability))
-            score += country.PoliticalStabilityScore / 2;
+            score += country.PoliticalStabilityScore * 2 / 3;
         
         if (factors.Goals.Contains(MigrationGoal.Safety))
-            score += country.SafetyScore / 2;
+            score += country.SafetyScore * 2 / 3;
 
-        // تطابق زبان
+        if (factors.Goals.Contains(MigrationGoal.Retirement))
+        {
+            // بازنشستگی: هزینه زندگی پایین + آب‌وهوای خوب + امنیت
+            if (country.CostOfLivingIndex < 45) score += 20;
+            if (country.ClimateScore > 70) score += 10;
+            if (country.SafetyScore > 75) score += 10;
+        }
+
+        if (factors.Goals.Contains(MigrationGoal.FamilyReunification) && factors.HasRelativesAbroad)
+        {
+            if (country.HasIranianCommunity) score += 15;
+        }
+
+        // ═══ تطابق زبان ═══
         if (factors.EnglishLevel >= LanguageProficiency.Advanced && country.EnglishWidelySpoken)
-            score += 15;
+            score += 20;
         else if (factors.EnglishLevel >= LanguageProficiency.Intermediate && country.EnglishWidelySpoken)
-            score += 8;
+            score += 12;
+        else if (factors.EnglishLevel < LanguageProficiency.Intermediate && !country.EnglishWidelySpoken)
+            score -= 10; // زبان محلی ضعیف + کشور انگلیسی‌زبان نیست → سخت
         
         if (factors.FrenchLevel >= LanguageProficiency.Intermediate && country.OfficialLanguages.Contains("فرانسوی"))
-            score += 10;
+            score += 12;
         
         if (factors.GermanLevel >= LanguageProficiency.Intermediate && country.OfficialLanguages.Contains("آلمانی"))
-            score += 10;
+            score += 12;
 
-        // تطابق تحصیلات
+        if (factors.SpanishLevel >= LanguageProficiency.Intermediate && country.OfficialLanguages.Contains("اسپانیایی"))
+            score += 12;
+
+        // ═══ تطابق تحصیلات ═══
         if (factors.Education >= EducationLevel.BachelorDegree)
-            score += 10;
+            score += 12;
         if (factors.Education >= EducationLevel.MasterDegree)
-            score += 5;
+            score += 6;
         if (factors.Education >= EducationLevel.PhD)
-            score += 5;
+            score += 6;
 
-        // سابقه کار
+        // ═══ سابقه کار ═══
         if (factors.YearsOfExperience >= 3)
-            score += 10;
+            score += 12;
         if (factors.YearsOfExperience >= 5)
+            score += 8;
+        if (factors.YearsOfExperience >= 10)
             score += 5;
 
-        // سلامت و تطابق روحی
+        // ═══ سلامت و تطابق روحی ═══
         if (factors.PhysicalHealth == PhysicalHealthStatus.Excellent || factors.PhysicalHealth == PhysicalHealthStatus.Good)
         {
             if (country.UniversalHealthcare)
-                score += 8;
+                score += 10;
         }
         else if (factors.HasChronicDisease || factors.NeedsSpecializedHealthcare)
         {
-            score += country.HealthcareScore / 5;
+            score += country.HealthcareScore / 4;
+            if (!country.UniversalHealthcare) score -= 15; // بدون بیمه همگانی + بیماری = مشکل
         }
 
         if (factors.StressTolerance == StressToleranceLevel.High || factors.StressTolerance == StressToleranceLevel.VeryHigh)
             score += 5;
+        else if (factors.StressTolerance == StressToleranceLevel.Low)
+        {
+            if (country.SafetyScore > 80) score += 8;
+            if (country.PoliticalStabilityScore > 80) score += 5;
+        }
         
         if (factors.Adaptability == AdaptabilityLevel.High || factors.Adaptability == AdaptabilityLevel.VeryHigh)
             score += 5;
+        else if (factors.Adaptability == AdaptabilityLevel.Low)
+            score -= 5; // سازگاری پایین = سخت‌تر
 
-        // ترجیحات فرهنگی و اجتماعی
+        // ═══ ترجیحات فرهنگی و اجتماعی ═══
         if (factors.HasRelativesAbroad && country.HasIranianCommunity)
-            score += 10;
+            score += 15;
         
-        if (factors.CommunityPreference == CommunityIntegrationPreference.LargeIranianCommunity && country.IranianPopulation > 50000)
-            score += 10;
+        if (factors.CommunityPreference == CommunityIntegrationPreference.LargeIranianCommunity)
+        {
+            if (country.IranianPopulation > 100000) score += 20;
+            else if (country.IranianPopulation > 10000) score += 8;
+            else score -= 15; // جامعه ایرانی بزرگ می‌خواد ولی اینجا نیست
+        }
+        else if (factors.CommunityPreference == CommunityIntegrationPreference.SmallIranianCommunity)
+        {
+            if (country.IranianPopulation > 0 && country.IranianPopulation < 20000) score += 10;
+        }
         else if (factors.CommunityPreference == CommunityIntegrationPreference.PreferDiverseCommunity)
-            score += 5;
+            score += 8;
 
-        // تطابق آب‌وهوا
+        // ═══ تطابق آب‌وهوا (با جریمه) ═══
         if (factors.ClimatePreference != ClimatePreference.NoPreference)
         {
+            bool climateMatch = false;
             if (factors.ClimatePreference == ClimatePreference.Mediterranean && country.Climate.Contains("مدیترانه"))
-                score += 8;
+                climateMatch = true;
             else if (factors.ClimatePreference == ClimatePreference.Temperate && country.Climate.Contains("معتدل"))
-                score += 8;
+                climateMatch = true;
             else if (factors.ClimatePreference == ClimatePreference.Cold && country.Climate.Contains("سرد"))
-                score += 8;
-            else if (factors.ClimatePreference == ClimatePreference.Tropical && country.Climate.Contains("گرم"))
-                score += 8;
+                climateMatch = true;
+            else if (factors.ClimatePreference == ClimatePreference.Tropical && (country.Climate.Contains("گرم") || country.Climate.Contains("گرمسیری")))
+                climateMatch = true;
+            else if (factors.ClimatePreference == ClimatePreference.Continental && country.Climate.Contains("قاره‌ای"))
+                climateMatch = true;
+
+            if (climateMatch) score += 15;
+            else score -= 15; // آب‌وهوای نامطلوب = جریمه
         }
 
-        // فاصله از ایران
-        if (factors.DistancePreference == DistanceFromIranPreference.VeryClose && country.DistanceFromIranKm < 2000)
-            score += 10;
-        else if (factors.DistancePreference == DistanceFromIranPreference.Close && country.DistanceFromIranKm < 5000)
-            score += 8;
-        else if (factors.DistancePreference == DistanceFromIranPreference.Moderate && country.DistanceFromIranKm < 8000)
-            score += 5;
+        // ═══ فاصله از ایران (فاکتور کلیدی با جریمه سنگین) ═══
+        if (factors.DistancePreference == DistanceFromIranPreference.VeryClose)
+        {
+            if (country.DistanceFromIranKm < 1000) score += 35;
+            else if (country.DistanceFromIranKm < 2000) score += 25;
+            else if (country.DistanceFromIranKm < 3500) score -= 15;
+            else if (country.DistanceFromIranKm < 6000) score -= 30;
+            else score -= 50; // خیلی دوره → جریمه سنگین
+        }
+        else if (factors.DistancePreference == DistanceFromIranPreference.Close)
+        {
+            if (country.DistanceFromIranKm < 3000) score += 25;
+            else if (country.DistanceFromIranKm < 5000) score += 15;
+            else if (country.DistanceFromIranKm < 8000) score -= 10;
+            else score -= 30;
+        }
+        else if (factors.DistancePreference == DistanceFromIranPreference.Moderate)
+        {
+            if (country.DistanceFromIranKm >= 3000 && country.DistanceFromIranKm < 8000) score += 15;
+            else if (country.DistanceFromIranKm < 3000) score += 5;
+            else score -= 10;
+        }
         else if (factors.DistancePreference == DistanceFromIranPreference.Far)
-            score += 3;
+        {
+            if (country.DistanceFromIranKm >= 8000) score += 20;
+            else if (country.DistanceFromIranKm >= 5000) score += 10;
+        }
+        // NoPreference = بدون امتیاز یا جریمه
 
-        // وضعیت تأهل و فرزندان
+        // ═══ وضعیت تأهل و فرزندان ═══
         if (factors.MaritalStatus == MaritalStatus.Married && factors.NumberOfChildren > 0)
         {
             if (factors.ChildrenEducationImportant && country.FreeEducation)
-                score += 10;
+                score += 15;
             
             if (country.QualityOfLifeScore > 85)
-                score += 5;
+                score += 8;
+
+            if (country.SafetyScore > 80)
+                score += 8;
+
+            if (country.CostOfLivingIndex > 75)
+                score -= 10; // هزینه بالا با بچه = سخت
         }
 
-        // توانایی مالی
+        // ═══ توانایی مالی ═══
         if (factors.NetWorthUSD > 500000 && country.VisaOptions.Any(v => v.MinInvestmentUSD > 0))
-            score += 10;
+            score += 12;
         
         if (factors.AnnualIncomeUSD > 50000)
-            score += 5;
+            score += 8;
 
-        // ترجیح تابعیت
-        if (factors.SeekingCitizenship && country.CitizenshipYears <= 5)
-            score += 10;
-        else if (factors.SeekingCitizenship && country.CitizenshipYears <= 10)
-            score += 5;
+        if (factors.NetWorthUSD < 10000)
+        {
+            // سرمایه کم → کشورهای گران مناسب نیستن
+            if (country.CostOfLivingIndex > 75) score -= 15;
+            if (country.AverageRentUSD > 1500) score -= 10;
+        }
 
-        // پایداری سیاسی
+        // ═══ ترجیح تابعیت ═══
+        if (factors.SeekingCitizenship)
+        {
+            if (country.CitizenshipYears <= 3) score += 20;
+            else if (country.CitizenshipYears <= 5) score += 15;
+            else if (country.CitizenshipYears <= 7) score += 8;
+            else if (country.CitizenshipYears <= 10) score += 3;
+            else score -= 20; // تابعیت خیلی طول می‌کشه
+        }
+
+        // ═══ پایداری سیاسی ═══
         if (factors.ImportanceOfPoliticalStability == ImportanceOfPoliticalStability.VeryImportant)
-            score += country.PoliticalStabilityScore / 5;
+        {
+            if (country.PoliticalStabilityScore > 80) score += 15;
+            else if (country.PoliticalStabilityScore > 60) score += 5;
+            else score -= 25; // بی‌ثباتی سیاسی وقتی خیلی مهمه = جریمه سنگین
+        }
+        else if (factors.ImportanceOfPoliticalStability == ImportanceOfPoliticalStability.Important)
+        {
+            if (country.PoliticalStabilityScore < 50) score -= 15;
+        }
+
+        // ═══ هزینه زندگی نسبت به درآمد ═══
+        if (factors.AnnualIncomeUSD > 0)
+        {
+            var monthlyCost = country.CostOfLivingIndex * 20;
+            var monthlyIncome = country.AverageSalaryUSD;
+            if (monthlyIncome > 0)
+            {
+                var ratio = monthlyCost / monthlyIncome;
+                if (ratio < 0.4m) score += 10; // ارزان نسبت به درآمد
+                else if (ratio > 0.7m) score -= 10; // گران
+            }
+        }
 
         return score;
     }
@@ -178,10 +277,11 @@ public class ImmigrationAdvisorService
         if (visa.MinEducation > factors.Education)
             return false;
 
-        // بررسی زبان
+        // بررسی زبان (هر زبانی که کاربر بلده چک کن)
         if (visa.MinLanguageLevel > factors.EnglishLevel && 
             visa.MinLanguageLevel > factors.FrenchLevel &&
-            visa.MinLanguageLevel > factors.GermanLevel)
+            visa.MinLanguageLevel > factors.GermanLevel &&
+            visa.MinLanguageLevel > factors.SpanishLevel)
             return false;
 
         // بررسی سابقه کار
