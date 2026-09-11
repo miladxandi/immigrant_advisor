@@ -23,7 +23,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '11.0.x'
-        dotnet-quality: 'preview'
 
     - name: Install MAUI workloads
       run: |
@@ -43,9 +42,6 @@ jobs:
       run: |
         echo "$KEYSTORE_BASE64" | base64 --decode > miladxandi.keystore
       working-directory: .
-
-    - name: Restore dependencies
-      run: dotnet restore ImmigrantAdvisor.Maui/ImmigrantAdvisor.Maui.csproj
 
     - name: Build Android APK (Unsigned for PR)
       if: github.event_name == 'pull_request'
