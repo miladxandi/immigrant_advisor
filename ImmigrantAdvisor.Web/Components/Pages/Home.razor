@@ -60,9 +60,7 @@
 
     <!-- Form Content -->
     <div class="max-w-4xl mx-auto px-4 py-6">
-        <EditForm Model="@factors" OnValidSubmit="@HandleSubmit" FormName="ImmigrationForm">
-            <DataAnnotationsValidator />
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                 <div class="p-6 md:p-8">
 
                     @* ===== Step 1: Personal Info ===== *@
@@ -430,7 +428,7 @@
                     {
                         <button type="button" @onclick="PrevStep"
                                 class="flex items-center gap-2 px-5 py-2.5 text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all font-medium text-sm">
-                            <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
                             مرحله قبل
                         </button>
                     }
@@ -444,12 +442,12 @@
                         <button type="button" @onclick="NextStep"
                                 class="flex items-center gap-2 px-6 py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium text-sm shadow-lg shadow-indigo-200">
                             مرحله بعد
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+                            <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
                         </button>
                     }
                     else
                     {
-                        <button type="submit" @onclick="HandleSubmit"
+                        <button type="button" @onclick="HandleSubmit"
                                 class="flex items-center gap-2 px-8 py-3 bg-gradient-to-l from-green-500 to-emerald-600 text-white rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all font-bold text-sm shadow-lg shadow-green-200">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             دریافت پیشنهادات مهاجرتی
@@ -457,11 +455,8 @@
                     }
                 </div>
             </div>
-        </EditForm>
+        </div>
     </div>
-</div>
-
-@* ===== Wizard Components ===== *@
 
 @code {
     private UserFactors factors = new();
