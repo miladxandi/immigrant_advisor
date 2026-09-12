@@ -65,7 +65,7 @@
                 </MudStack>
                 <MudGrid>
                     <MudItem xs="12" md="4">
-                        <MudNumericField T="int?" @bind-Value="factors.Age" Label="🎂 سن" Variant="Variant.Outlined" Min="18" Max="80" Placeholder="مثلاً 30" Class="ltr-input" />
+                        <MudNumericField T="int" @bind-Value="factors.Age" Label="🎂 سن" Variant="Variant.Outlined" Min="18" Max="80" Placeholder="مثلاً 30" Class="ltr-input" />
                     </MudItem>
                     <MudItem xs="12" md="4">
                         <MudSelect T="string" @bind-Value="_genderString" Label="👤 جنسیت" Variant="Variant.Outlined">
@@ -88,7 +88,7 @@
                     <MudPaper Class="pa-4 mt-4" Elevation="0" Style="background: rgba(63,81,181,0.05); border-radius: 12px; border: 1px solid rgba(63,81,181,0.1);">
                         <MudGrid>
                             <MudItem xs="12" md="6">
-                                <MudNumericField T="int?" @bind-Value="factors.NumberOfChildren" Label="👶 تعداد فرزندان" Variant="Variant.Outlined" Min="0" Max="10" Class="ltr-input" />
+                                <MudNumericField T="int" @bind-Value="factors.NumberOfChildren" Label="👶 تعداد فرزندان" Variant="Variant.Outlined" Min="0" Max="10" Class="ltr-input" />
                             </MudItem>
                             <MudItem xs="12" md="6">
                                 <MudSelect T="string" @bind-Value="_spouseWorkingString" Label="💼 همسر شاغل است؟" Variant="Variant.Outlined">
@@ -181,7 +181,7 @@
                         <MudTextField @bind-Value="factors.Occupation" Label="🏢 شغل فعلی" Variant="Variant.Outlined" Placeholder="مثال: مهندس نرم‌افزار" />
                     </MudItem>
                     <MudItem xs="12" md="6">
-                        <MudNumericField T="int?" @bind-Value="factors.YearsOfExperience" Label="📅 سابقه کار (سال)" Variant="Variant.Outlined" Min="0" Max="50" Class="ltr-input" />
+                        <MudNumericField T="int" @bind-Value="factors.YearsOfExperience" Label="📅 سابقه کار (سال)" Variant="Variant.Outlined" Min="0" Max="50" Class="ltr-input" />
                     </MudItem>
                     <MudItem xs="12" md="6">
                         <MudSelect T="string" @bind-Value="_employmentString" Label="📋 نوع اشتغال" Variant="Variant.Outlined">
