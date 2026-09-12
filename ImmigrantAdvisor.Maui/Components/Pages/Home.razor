@@ -21,7 +21,9 @@
         {
             var idx = i;
             <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex: 1;">
-                <MudAvatar Size="Size.Small" Color="@(idx == currentStep ? Color.Primary : (idx < currentStep ? Color.Success : Color.Default))" Style="cursor: pointer; min-width: 32px; width: 32px; height: 32px; font-size: 12px;" OnClick="@(() => GoToStep(idx))">
+                <MudButton Variant="Variant.Text" Size="Size.Small" 
+                           Style="min-width: 32px; width: 32px; height: 32px; border-radius: 50%; padding: 0; @(idx == currentStep ? "background: #3f51b5; color: white;" : (idx < currentStep ? "background: #4caf50; color: white;" : "background: #e0e0e0; color: #666;"))"
+                           OnClick="@(() => GoToStep(idx))">
                     @if (idx < currentStep)
                     {
                         <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" />
@@ -30,10 +32,10 @@
                     {
                         <MudText Typo="Typo.caption">@(idx + 1)</MudText>
                     }
-                </MudAvatar>
+                </MudButton>
                 @if (idx < 6)
                 {
-                    <MudDivider Style="flex: 1; @(idx < currentStep ? "border-color: #4caf50;" : "")" />
+                    <MudDivider Style="flex: 1;" />
                 }
             </MudStack>
         }
@@ -73,7 +75,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12" md="4">
-                        <MudSelect T="string" @bind-Value="_maritalStatusString" Label="💍 وضعیت تأهل" Variant="Variant.Outlined" OnSelectedItemsChanged="OnMaritalStatusStringChanged">
+                        <MudSelect T="string" @bind-Value="_maritalStatusString" Label="💍 وضعیت تأهل" Variant="Variant.Outlined">
                             <MudSelectItem Value="@("Single")">مجرد</MudSelectItem>
                             <MudSelectItem Value="@("Married")">متأهل</MudSelectItem>
                             <MudSelectItem Value="@("Divorced")">مطلقه</MudSelectItem>
@@ -439,11 +441,11 @@
 <!-- Bottom Navigation Bar -->
 <div style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: white; border-top: 1px solid #e0e0e0; padding: 12px 16px; box-shadow: 0 -2px 8px rgba(0,0,0,0.1);">
     <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="mx-auto" Style="max-width: 960px;">
-        <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" Color="Color.Default" OnClick="PrevStep" Disabled="@(currentStep == 0)" Title="مرحله قبل" />
-        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="ClearForm" Title="پاک کردن فرم" />
+        <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" Color="Color.Default" OnClick="PrevStep" Disabled="@(currentStep == 0)" />
+        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="ClearForm" />
         @if (currentStep < 6)
         {
-            <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" Color="Color.Primary" OnClick="NextStep" Title="مرحله بعد" Style="background: #3f51b5; color: white; border-radius: 50%;" />
+            <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" Color="Color.Primary" OnClick="NextStep" Style="background: #3f51b5; color: white; border-radius: 50%;" />
         }
         else
         {
@@ -523,23 +525,23 @@
         if (Enum.TryParse<MaritalStatus>(_maritalStatusString, out var ms)) factors.MaritalStatus = ms;
         if (bool.TryParse(_spouseWorkingString, out var sw)) factors.SpouseWorking = sw;
         if (Enum.TryParse<EducationLevel>(_educationString, out var ed)) factors.Education = ed;
-        if (Enum.TryParse<LanguageLevel>(_englishLevelString, out var el)) factors.EnglishLevel = el;
-        if (Enum.TryParse<LanguageLevel>(_frenchLevelString, out var fl)) factors.FrenchLevel = fl;
-        if (Enum.TryParse<LanguageLevel>(_germanLevelString, out var gl)) factors.GermanLevel = gl;
-        if (Enum.TryParse<EmploymentStatus>(_employmentString, out var es)) factors.CurrentEmployment = es;
-        if (Enum.TryParse<HealthStatus>(_physicalHealthString, out var ph)) factors.PhysicalHealth = ph;
-        if (Enum.TryParse<HealthStatus>(_mentalHealthString, out var mh)) factors.MentalHealth = mh;
-        if (Enum.TryParse<StressTolerance>(_stressToleranceString, out var st)) factors.StressTolerance = st;
-        if (Enum.TryParse<Adaptability>(_adaptabilityString, out var ad)) factors.Adaptability = ad;
+        if (Enum.TryParse<LanguageProficiency>(_englishLevelString, out var el)) factors.EnglishLevel = el;
+        if (Enum.TryParse<LanguageProficiency>(_frenchLevelString, out var fl)) factors.FrenchLevel = fl;
+        if (Enum.TryParse<LanguageProficiency>(_germanLevelString, out var gl)) factors.GermanLevel = gl;
+        if (Enum.TryParse<EmploymentType>(_employmentString, out var es)) factors.CurrentEmployment = es;
+        if (Enum.TryParse<PhysicalHealthStatus>(_physicalHealthString, out var ph)) factors.PhysicalHealth = ph;
+        if (Enum.TryParse<MentalHealthStatus>(_mentalHealthString, out var mh)) factors.MentalHealth = mh;
+        if (Enum.TryParse<StressToleranceLevel>(_stressToleranceString, out var st)) factors.StressTolerance = st;
+        if (Enum.TryParse<AdaptabilityLevel>(_adaptabilityString, out var ad)) factors.Adaptability = ad;
         if (Enum.TryParse<CulturalPreference>(_culturalPreferenceString, out var cp)) factors.CulturalPreference = cp;
         if (Enum.TryParse<ReligionPreference>(_religionPreferenceString, out var rp)) factors.ReligionPreference = rp;
-        if (Enum.TryParse<ImportanceLevel>(_politicalStabilityString, out var ps)) factors.ImportanceOfPoliticalStability = ps;
-        if (Enum.TryParse<CommunityPreference>(_communityPreferenceString, out var cpr)) factors.CommunityPreference = cpr;
+        if (Enum.TryParse<ImportanceOfPoliticalStability>(_politicalStabilityString, out var ps)) factors.ImportanceOfPoliticalStability = ps;
+        if (Enum.TryParse<CommunityIntegrationPreference>(_communityPreferenceString, out var cpr)) factors.CommunityPreference = cpr;
         if (Enum.TryParse<MigrationTimeline>(_timelineString, out var tl)) factors.PreferredTimeline = tl;
         if (Enum.TryParse<ClimatePreference>(_climateString, out var cl)) factors.ClimatePreference = cl;
         if (Enum.TryParse<UrbanRuralPreference>(_urbanRuralString, out var ur)) factors.UrbanRuralPreference = ur;
-        if (Enum.TryParse<DistancePreference>(_distanceString, out var dp)) factors.DistancePreference = dp;
-        if (Enum.TryParse<ChildAgeCategory>(_eldestChildAgeString, out var ca)) factors.EldestChildAge = ca;
+        if (Enum.TryParse<DistanceFromIranPreference>(_distanceString, out var dp)) factors.DistancePreference = dp;
+        if (Enum.TryParse<AgeGroup>(_eldestChildAgeString, out var ca)) factors.EldestChildAge = ca;
     }
 
     private void GoToStep(int step)
