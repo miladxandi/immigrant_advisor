@@ -3,6 +3,7 @@
 @using ImmigrantAdvisor.Shared.Services
 @using ImmigrantAdvisor.Web.Components.Shared
 @inject NavigationManager NavigationManager
+@inject AppStateService AppState
 
 <PageTitle>نتایج مشاوره مهاجرت</PageTitle>
 
@@ -323,7 +324,7 @@
 
     protected override void OnInitialized()
     {
-        results = ResultsDataHolder.LatestResults ?? new();
+        results = AppState.Results ?? new();
         if (!results.Any())
         {
             NavigationManager.NavigateTo("/");
