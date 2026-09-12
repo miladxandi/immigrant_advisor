@@ -16,15 +16,28 @@
 
 <!-- Stepper -->
 <MudPaper Class="mx-4 mt-n5 pa-4" Elevation="4" Style="border-radius: 16px; z-index: 10; position: relative;">
-    <MudStepper @bind-ActiveStepIndex="_activeStepIndex" Linear="false" Color="Color.Primary" Vertical="false">
-        <MudStep Title="۱" />
-        <MudStep Title="۲" />
-        <MudStep Title="۳" />
-        <MudStep Title="۴" />
-        <MudStep Title="۵" />
-        <MudStep Title="۶" />
-        <MudStep Title="۷" />
-    </MudStepper>
+    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+        @for (int i = 0; i < 7; i++)
+        {
+            var idx = i;
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex: 1;">
+                <MudAvatar Size="Size.Small" Color="@(idx == currentStep ? Color.Primary : (idx < currentStep ? Color.Success : Color.Default))" Style="cursor: pointer; min-width: 32px; width: 32px; height: 32px; font-size: 12px;" OnClick="@(() => GoToStep(idx))">
+                    @if (idx < currentStep)
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" />
+                    }
+                    else
+                    {
+                        <MudText Typo="Typo.caption">@(idx + 1)</MudText>
+                    }
+                </MudAvatar>
+                @if (idx < 6)
+                {
+                    <MudDivider Style="flex: 1; @(idx < currentStep ? "border-color: #4caf50;" : "")" />
+                }
+            </MudStack>
+        }
+    </MudStack>
     <MudText Typo="Typo.body2" Class="text-center mt-2" Style="color: #3f51b5;">
         <strong>@stepTitles[currentStep]</strong>
         <span class="text-grey ms-2">مرحله @(currentStep + 1) از ۷</span>
@@ -180,7 +193,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12" md="6">
-                        <MudNumericField T="int?" @bind-Value="factors.AnnualIncomeUSD" Label="💵 درآمد سالانه (دلار)" Variant="Variant.Outlined" Min="0" Step="1000" Placeholder="مثلاً 25000" Class="ltr-input" />
+                        <MudNumericField T="decimal" @bind-Value="factors.AnnualIncomeUSD" Label="💵 درآمد سالانه (دلار)" Variant="Variant.Outlined" Min="0" Step="1000" Placeholder="مثلاً 25000" Class="ltr-input" />
                     </MudItem>
                 </MudGrid>
             </div>
@@ -198,10 +211,10 @@
                 </MudStack>
                 <MudGrid>
                     <MudItem xs="12" md="6">
-                        <MudNumericField T="int?" @bind-Value="factors.NetWorthUSD" Label="🏠 ارزش خالص دارایی‌ها (دلار)" Variant="Variant.Outlined" Min="0" Step="10000" Placeholder="مثلاً 200000" Class="ltr-input" />
+                        <MudNumericField T="decimal" @bind-Value="factors.NetWorthUSD" Label="🏠 ارزش خالص دارایی‌ها (دلار)" Variant="Variant.Outlined" Min="0" Step="10000" Placeholder="مثلاً 200000" Class="ltr-input" />
                     </MudItem>
                     <MudItem xs="12" md="6">
-                        <MudNumericField T="int?" @bind-Value="factors.AnnualSavingsUSD" Label="🏦 پس‌انداز سالانه (دلار)" Variant="Variant.Outlined" Min="0" Step="5000" Placeholder="مثلاً 10000" Class="ltr-input" />
+                        <MudNumericField T="decimal" @bind-Value="factors.AnnualSavingsUSD" Label="🏦 پس‌انداز سالانه (دلار)" Variant="Variant.Outlined" Min="0" Step="5000" Placeholder="مثلاً 10000" Class="ltr-input" />
                     </MudItem>
                 </MudGrid>
                 <MudGrid Class="mt-4">
