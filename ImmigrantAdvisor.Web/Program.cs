@@ -2,7 +2,7 @@ using ImmigrantAdvisor.Shared.Models;
 using ImmigrantAdvisor.Shared.Services;
 using ImmigrantAdvisor.Web.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

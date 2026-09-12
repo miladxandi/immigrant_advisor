@@ -261,7 +261,7 @@
                             @if (plan.RecommendedVisa.Requirements.Any())
                             {
                                 <MudExpansionPanels>
-                                    <MudExpansionPanel Text="نیازمندی‌های ویزا" ExpandedIcon="@Icons.Material.Filled.Description">
+                                    <MudExpansionPanel Text="نیازمندی‌های ویزا">
                                         <MudStack Spacing="1">
                                             @foreach (var req in plan.RecommendedVisa.Requirements)
                                             {
@@ -276,7 +276,7 @@
                             @if (plan.RecommendedVisa.Benefits.Any())
                             {
                                 <MudExpansionPanels>
-                                    <MudExpansionPanel Text="مزایای ویزا" ExpandedIcon="@Icons.Material.Filled.CardGiftcard">
+                                    <MudExpansionPanel Text="مزایای ویزا">
                                         <MudStack Spacing="1">
                                             @foreach (var b in plan.RecommendedVisa.Benefits)
                                             {
