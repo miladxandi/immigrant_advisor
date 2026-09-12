@@ -261,46 +261,30 @@
                             @if (plan.RecommendedVisa.Requirements.Any())
                             {
                                 <MudExpansionPanels>
-                                    <MudExpansionPanel>
-                                        <TitleContent>
-                                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
-                                                <MudIcon Icon="@Icons.Material.Filled.Description" Color="Color.Primary" />
-                                                <MudText Typo="Typo.subtitle2" Class="font-weight-bold">نیازمندی‌های ویزا</MudText>
-                                            </MudStack>
-                                        </TitleContent>
-                                        <ChildContent>
-                                            <MudStack Spacing="1">
-                                                @foreach (var req in plan.RecommendedVisa.Requirements)
-                                                {
-                                                    <MudPaper Class="pa-3" Elevation="0" Style="background: rgba(63,81,181,0.02); border: 1px solid rgba(63,81,181,0.1); border-radius: 8px;">
-                                                        <MudText Typo="Typo.body2" Class="text-grey">• @req</MudText>
-                                                    </MudPaper>
-                                                }
-                                            </MudStack>
-                                        </ChildContent>
+                                    <MudExpansionPanel Text="نیازمندی‌های ویزا">
+                                        <MudStack Spacing="1">
+                                            @foreach (var req in plan.RecommendedVisa.Requirements)
+                                            {
+                                                <MudPaper Class="pa-3" Elevation="0" Style="background: rgba(63,81,181,0.02); border: 1px solid rgba(63,81,181,0.1); border-radius: 8px;">
+                                                    <MudText Typo="Typo.body2" Class="text-grey">• @req</MudText>
+                                                </MudPaper>
+                                            }
+                                        </MudStack>
                                     </MudExpansionPanel>
                                 </MudExpansionPanels>
                             }
                             @if (plan.RecommendedVisa.Benefits.Any())
                             {
                                 <MudExpansionPanels>
-                                    <MudExpansionPanel>
-                                        <TitleContent>
-                                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
-                                                <MudIcon Icon="@Icons.Material.Filled.CardGiftcard" Color="Color.Success" />
-                                                <MudText Typo="Typo.subtitle2" Class="font-weight-bold">مزایای ویزا</MudText>
-                                            </MudStack>
-                                        </TitleContent>
-                                        <ChildContent>
-                                            <MudStack Spacing="1">
-                                                @foreach (var b in plan.RecommendedVisa.Benefits)
-                                                {
-                                                    <MudPaper Class="pa-3" Elevation="0" Style="background: rgba(76,175,80,0.02); border: 1px solid rgba(76,175,80,0.1); border-radius: 8px;">
-                                                        <MudText Typo="Typo.body2" Style="color: #2e7d32;">✓ @b</MudText>
-                                                    </MudPaper>
-                                                }
-                                            </MudStack>
-                                        </ChildContent>
+                                    <MudExpansionPanel Text="مزایای ویزا">
+                                        <MudStack Spacing="1">
+                                            @foreach (var b in plan.RecommendedVisa.Benefits)
+                                            {
+                                                <MudPaper Class="pa-3" Elevation="0" Style="background: rgba(76,175,80,0.02); border: 1px solid rgba(76,175,80,0.1); border-radius: 8px;">
+                                                    <MudText Typo="Typo.body2" Style="color: #2e7d32;">✓ @b</MudText>
+                                                </MudPaper>
+                                            }
+                                        </MudStack>
                                     </MudExpansionPanel>
                                 </MudExpansionPanels>
                             }
