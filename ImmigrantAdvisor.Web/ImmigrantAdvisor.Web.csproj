@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ImmigrantAdvisor.Shared\ImmigrantAdvisor.Shared.csproj" />
   </ItemGroup>
 
