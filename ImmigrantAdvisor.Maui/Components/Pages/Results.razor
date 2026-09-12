@@ -1,241 +1,249 @@
 @page "/results"
 @using ImmigrantAdvisor.Shared.Models
 @using ImmigrantAdvisor.Shared.Services
-@inject ImmigrationAdvisorService AdvisorService
-@inject AppStateService AppState
 @inject NavigationManager NavigationManager
 
 <PageTitle>نتایج مشاوره مهاجرت</PageTitle>
 
-<div class="max-w-7xl mx-auto px-4 py-6">
-    <div class="flex justify-center">
-        <div class="w-full max-w-5xl">
-            <div class="bg-white rounded-2xl shadow-xl">
-                <div class="bg-green-600 text-white text-center rounded-t-2xl py-4 px-6">
-                    <h2 class="mb-0">📊 نتایج مشاوره مهاجرت</h2>
-                    <p class="mb-0 mt-2">بر اساس اطلاعات شما، این گزینه‌ها پیشنهاد می‌شوند</p>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-teal-100">
+    <!-- Header -->
+    <div class="bg-gradient-to-l from-emerald-600 via-teal-600 to-cyan-700 text-white">
+        <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-4">
+                <span class="text-3xl">📊</span>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold mb-2">نتایج مشاوره مهاجرت</h1>
+            <p class="text-emerald-100 text-sm md:text-base">بر اساس اطلاعات شما، بهترین گزینه‌های مهاجرتی پیشنهاد می‌شوند</p>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 py-8">
+        @if (results == null || !results.Any())
+        {
+            <div class="bg-white rounded-2xl shadow-lg p-12 text-center">
+                <div class="text-5xl mb-4">😕</div>
+                <h3 class="text-xl font-bold text-gray-700 mb-2">هیچ نتیجه‌ای یافت نشد</h3>
+                <p class="text-gray-400 mb-6">لطفاً اطلاعات خود را بازبینی کنید و دوباره تلاش کنید.</p>
+                <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium shadow-lg shadow-indigo-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
+                    بازگشت به فرم
+                </a>
+            </div>
+        }
+        else
+        {
+            <!-- Results Summary -->
+            <div class="bg-white rounded-2xl shadow-lg p-5 mb-6 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-lg">✅</div>
+                    <div>
+                        <p class="font-bold text-gray-700">@results.Count کشور مناسب شما پیدا شد</p>
+                        <p class="text-xs text-gray-400">مرتب‌شده بر اساس بیشترین تطابق</p>
+                    </div>
                 </div>
-                <div class="p-6">
-                    @if (results == null || !results.Any())
-                    {
-                        <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-xl p-4 text-center">
-                            <h4>⚠️ هیچ نتیجه‌ای یافت نشد</h4>
-                            <p>لطفاً اطلاعات خود را بازبینی کنید و دوباره تلاش کنید.</p>
-                            <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors inline-block">بازگشت به فرم</a>
+                <a href="/" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
+                    ویرایش اطلاعات
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                </a>
+            </div>
+
+            <!-- Country Cards -->
+            <div class="space-y-6">
+                @for (int idx = 0; idx < results.Count; idx++)
+                {
+                    var plan = results[idx];
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <!-- Country Header -->
+                        <div class="bg-gradient-to-l from-indigo-600 to-violet-600 text-white p-5">
+                            <div class="flex flex-wrap justify-between items-center gap-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-4xl">@plan.Country.FlagEmoji</span>
+                                    <div>
+                                        <h3 class="text-xl font-bold">@plan.Country.NamePersian</h3>
+                                        <p class="text-indigo-200 text-sm">@plan.Country.Name</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    @if (idx == 0)
+                                    {
+                                        <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full">🏆 بهترین گزینه</span>
+                                    }
+                                    <div class="text-center bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
+                                        <p class="text-xs text-indigo-200">امتیاز تطابق</p>
+                                        <p class="text-2xl font-bold">@plan.MatchScore<span class="text-sm text-indigo-200">/100</span></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="space-y-6">
-                            @foreach (var plan in results)
-                            {
-                                <div class="transition-transform hover:-translate-y-1 hover:shadow-lg mb-6">
-                                    <div class="border border-blue-500 rounded-xl">
-                                        <div class="bg-blue-600 text-white rounded-t-xl py-4 px-6">
-                                            <div class="flex justify-between items-center">
-                                                <h3 class="mb-0">
-                                                    @plan.Country.FlagEmoji @plan.Country.NamePersian (@plan.Country.Name)
-                                                </h3>
-                                                <div class="text-lg">
-                                                    <span class="bg-white text-gray-800 text-lg px-3 py-1 rounded-full font-semibold">
-                                                        امتیاز تطابق: @plan.MatchScore
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="p-6">
-                                            <!-- اطلاعات کشور -->
-                                            <div class="flex flex-wrap -mx-3 mb-3">
-                                                <div class="w-full md:w-1/2 px-3">
-                                                    <h5 class="text-blue-600">📍 اطلاعات کلی</h5>
-                                                    <ul class="list-none p-0">
-                                                        <li><strong>قاره:</strong> @plan.Country.Continent</li>
-                                                        <li><strong>فاصله از ایران:</strong> @plan.Country.DistanceFromIranKm کیلومتر</li>
-                                                        <li><strong>جمعیت ایرانی:</strong> @plan.Country.IranianPopulation.ToString("N0") نفر</li>
-                                                        <li><strong>زبان‌های رسمی:</strong> @string.Join("، ", plan.Country.OfficialLanguages)</li>
-                                                        <li><strong>تابعیت:</strong> پس از @plan.Country.CitizenshipYears سال</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="w-full md:w-1/2 px-3">
-                                                    <h5 class="text-blue-600">📈 امتیازات کشور</h5>
-                                                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
-                                                        <div class="bg-green-500 h-6 rounded-full flex items-center" role="progressbar" 
-                                                             style="width: @plan.Country.QualityOfLifeScore%">
-                                                            کیفیت زندگی: @plan.Country.QualityOfLifeScore
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
-                                                        <div class="bg-cyan-500 h-6 rounded-full flex items-center" role="progressbar" 
-                                                             style="width: @plan.Country.SafetyScore%">
-                                                            امنیت: @plan.Country.SafetyScore
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
-                                                        <div class="bg-yellow-500 h-6 rounded-full flex items-center" role="progressbar" 
-                                                             style="width: @plan.Country.HealthcareScore%">
-                                                            بهداشت: @plan.Country.HealthcareScore
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
-                                                        <div class="bg-blue-500 h-6 rounded-full flex items-center" role="progressbar" 
-                                                             style="width: @plan.Country.EducationScore%">
-                                                            آموزش: @plan.Country.EducationScore
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <!-- ویزای پیشنهادی -->
-                                            <div class="bg-cyan-50 border border-cyan-200 text-cyan-800 rounded-xl p-4">
-                                                <h5 class="text-blue-600">🎫 ویزای پیشنهادی</h5>
-                                                <h6 class="font-bold">@plan.RecommendedVisa.Name</h6>
-                                                <div class="flex flex-wrap -mx-3">
-                                                    <div class="w-full md:w-1/2 px-3">
-                                                        <p><strong>نوع:</strong> @plan.RecommendedVisa.Type</p>
-                                                        <p><strong>مدت:</strong> @plan.RecommendedVisa.Duration</p>
-                                                        <p><strong>زمان پردازش:</strong> @plan.RecommendedVisa.ProcessingTimeMonths ماه</p>
-                                                    </div>
-                                                    <div class="w-full md:w-1/2 px-3">
-                                                        <p><strong>منجر به اقامت دائم:</strong> @(plan.RecommendedVisa.LeadsToPR ? "بله ✓" : "خیر")</p>
-                                                        <p><strong>منجر به تابعیت:</strong> @(plan.RecommendedVisa.LeadsToCitizenship ? "بله ✓" : "خیر")</p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                        <div class="p-6">
+                            <!-- Score Bars -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                                <ScoreCard Label="کیفیت زندگی" Score="@plan.Country.QualityOfLifeScore" Color="green" />
+                                <ScoreCard Label="امنیت" Score="@plan.Country.SafetyScore" Color="blue" />
+                                <ScoreCard Label="بهداشت" Score="@plan.Country.HealthcareScore" Color="yellow" />
+                                <ScoreCard Label="آموزش" Score="@plan.Country.EducationScore" Color="purple" />
+                            </div>
 
-                                            <!-- هزینه‌ها و درآمد -->
-                                            <div class="flex flex-wrap -mx-3 mb-3">
-                                                <div class="w-full md:w-1/2 px-3">
-                                                    <div class="bg-gray-100 rounded-xl">
-                                                        <div class="p-6 text-center">
-                                                            <h6 class="text-gray-500">هزینه ماهانه تخمینی</h6>
-                                                            <h3 class="text-red-600">$@plan.EstimatedMonthlyCostUSD.ToString("N0")</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="w-full md:w-1/2 px-3">
-                                                    <div class="bg-gray-100 rounded-xl">
-                                                        <div class="p-6 text-center">
-                                                            <h6 class="text-gray-500">درآمد ماهانه متوسط</h6>
-                                                            <h3 class="text-green-600">$@plan.EstimatedMonthlyIncomeUSD.ToString("N0")</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                            <!-- Key Info -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                                <InfoCard Icon="🌍" Label="قاره" Value="@plan.Country.Continent" />
+                                <InfoCard Icon="📏" Label="فاصله" Value="@($"{plan.Country.DistanceFromIranKm:N0} km")" />
+                                <InfoCard Icon="👥" Label="جمعیت ایرانی" Value="@plan.Country.IranianPopulation.ToString("N0")" />
+                                <InfoCard Icon="🛂" Label="تابعیت" Value="@($"{plan.Country.CitizenshipYears} سال")" />
+                            </div>
 
-                                            <!-- نقاط قوت -->
-                                            @if (plan.Strengths.Any())
+                            <!-- Visa Info -->
+                            <div class="bg-gradient-to-l from-cyan-50 to-blue-50 border border-cyan-200 rounded-xl p-5 mb-6">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="text-lg">🎫</span>
+                                    <h4 class="font-bold text-cyan-800">ویزای پیشنهادی: @plan.RecommendedVisa.Name</h4>
+                                </div>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                                    <div><span class="text-gray-500">نوع:</span> <span class="font-medium text-gray-700">@plan.RecommendedVisa.Type</span></div>
+                                    <div><span class="text-gray-500">مدت:</span> <span class="font-medium text-gray-700">@plan.RecommendedVisa.Duration</span></div>
+                                    <div><span class="text-gray-500">پردازش:</span> <span class="font-medium text-gray-700">@plan.RecommendedVisa.ProcessingTimeMonths ماه</span></div>
+                                    <div><span class="text-gray-500">اقامت دائم:</span> <span class="font-medium @(plan.RecommendedVisa.LeadsToPR ? "text-green-600" : "text-gray-500")">@(plan.RecommendedVisa.LeadsToPR ? "✓ بله" : "خیر")</span></div>
+                                    <div><span class="text-gray-500">تابعیت:</span> <span class="font-medium @(plan.RecommendedVisa.LeadsToCitizenship ? "text-green-600" : "text-gray-500")">@(plan.RecommendedVisa.LeadsToCitizenship ? "✓ بله" : "خیر")</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Financial -->
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="bg-red-50 border border-red-100 rounded-xl p-4 text-center">
+                                    <p class="text-xs text-red-400 mb-1">هزینه ماهانه تخمینی</p>
+                                    <p class="text-xl font-bold text-red-600">$@plan.EstimatedMonthlyCostUSD.ToString("N0")</p>
+                                </div>
+                                <div class="bg-green-50 border border-green-100 rounded-xl p-4 text-center">
+                                    <p class="text-xs text-green-400 mb-1">درآمد ماهانه متوسط</p>
+                                    <p class="text-xl font-bold text-green-600">$@plan.EstimatedMonthlyIncomeUSD.ToString("N0")</p>
+                                </div>
+                            </div>
+
+                            <!-- Strengths & Challenges -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                @if (plan.Strengths.Any())
+                                {
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-green-600 mb-2 flex items-center gap-1">
+                                            <span class="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center text-xs">✓</span>
+                                            نقاط قوت
+                                        </h5>
+                                        <div class="space-y-2">
+                                            @foreach (var s in plan.Strengths)
                                             {
-                                                <div class="mb-3">
-                                                    <h5 class="text-green-600">✓ نقاط قوت</h5>
-                                                    <div class="flex flex-wrap -mx-3">
-                                                        @foreach (var strength in plan.Strengths)
-                                                        {
-                                                            <div class="w-full md:w-1/2 px-3">
-                                                                <div class="bg-green-50 border border-green-200 text-green-800 rounded-lg p-2 mb-2">
-                                                                    @strength
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                    </div>
+                                                <div class="flex items-start gap-2 text-sm bg-green-50 border border-green-100 rounded-lg p-2.5 text-green-700">
+                                                    <span class="text-green-500 mt-0.5">●</span> @s
                                                 </div>
-                                            }
-
-                                            <!-- چالش‌ها -->
-                                            @if (plan.Challenges.Any())
-                                            {
-                                                <div class="mb-3">
-                                                    <h5 class="text-yellow-600">⚠ چالش‌ها</h5>
-                                                    <div class="flex flex-wrap -mx-3">
-                                                        @foreach (var challenge in plan.Challenges)
-                                                        {
-                                                            <div class="w-full md:w-1/2 px-3">
-                                                                <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg p-2 mb-2">
-                                                                    @challenge
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                </div>
-                                            }
-
-                                            <!-- توصیه‌ها -->
-                                            @if (plan.Recommendations.Any())
-                                            {
-                                                <div class="mb-3">
-                                                    <h5 class="text-cyan-600">💡 توصیه‌ها</h5>
-                                                    <ul class="divide-y divide-gray-200 rounded-xl overflow-hidden border border-gray-200">
-                                                        @foreach (var rec in plan.Recommendations)
-                                                        {
-                                                            <li class="bg-cyan-50 text-cyan-800 px-4 py-3">@rec</li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            }
-
-                                            <!-- مراحل -->
-                                            @if (plan.Steps.Any())
-                                            {
-                                                <div class="mb-3">
-                                                    <h5 class="text-blue-600">📋 مراحل اقدام</h5>
-                                                    <ol class="list-decimal list-inside divide-y divide-gray-200 rounded-xl overflow-hidden border border-gray-200">
-                                                        @foreach (var step in plan.Steps)
-                                                        {
-                                                            <li class="bg-white px-4 py-3">@step</li>
-                                                        }
-                                                    </ol>
-                                                </div>
-                                            }
-
-                                            <!-- نیازمندی‌های ویزا -->
-                                            @if (plan.RecommendedVisa.Requirements.Any())
-                                            {
-                                                <details class="mb-3">
-                                                    <summary class="border border-blue-500 text-blue-500 hover:bg-blue-50 font-medium py-2 px-4 rounded-lg transition-colors cursor-pointer inline-block">
-                                                        📄 مشاهده نیازمندی‌های ویزا
-                                                    </summary>
-                                                    <div class="mt-2">
-                                                        <ul class="divide-y divide-gray-200 rounded-xl overflow-hidden border border-gray-200">
-                                                            @foreach (var req in plan.RecommendedVisa.Requirements)
-                                                            {
-                                                                <li class="bg-white px-4 py-3">@req</li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </details>
-                                            }
-
-                                            <!-- مزایای ویزا -->
-                                            @if (plan.RecommendedVisa.Benefits.Any())
-                                            {
-                                                <details class="mb-3">
-                                                    <summary class="border border-green-500 text-green-500 hover:bg-green-50 font-medium py-2 px-4 rounded-lg transition-colors cursor-pointer inline-block">
-                                                        🎁 مشاهده مزایای ویزا
-                                                    </summary>
-                                                    <div class="mt-2">
-                                                        <ul class="divide-y divide-gray-200 rounded-xl overflow-hidden border border-gray-200">
-                                                            @foreach (var benefit in plan.RecommendedVisa.Benefits)
-                                                            {
-                                                                <li class="bg-green-50 text-green-800 px-4 py-3">@benefit</li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </details>
                                             }
                                         </div>
                                     </div>
+                                }
+                                @if (plan.Challenges.Any())
+                                {
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-amber-600 mb-2 flex items-center gap-1">
+                                            <span class="w-6 h-6 bg-amber-100 rounded-lg flex items-center justify-center text-xs">⚠</span>
+                                            چالش‌ها
+                                        </h5>
+                                        <div class="space-y-2">
+                                            @foreach (var c in plan.Challenges)
+                                            {
+                                                <div class="flex items-start gap-2 text-sm bg-amber-50 border border-amber-100 rounded-lg p-2.5 text-amber-700">
+                                                    <span class="text-amber-500 mt-0.5">●</span> @c
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Recommendations -->
+                            @if (plan.Recommendations.Any())
+                            {
+                                <div class="mb-6">
+                                    <h5 class="text-sm font-semibold text-blue-600 mb-2 flex items-center gap-1">
+                                        <span class="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center text-xs">💡</span>
+                                        توصیه‌ها
+                                    </h5>
+                                    <div class="space-y-2">
+                                        @foreach (var r in plan.Recommendations)
+                                        {
+                                            <div class="flex items-start gap-2 text-sm bg-blue-50 border border-blue-100 rounded-lg p-2.5 text-blue-700">
+                                                <span class="text-blue-400 mt-0.5">→</span> @r
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                             }
-                        </div>
 
-                        <div class="flex flex-col gap-2 mt-6">
-                            <a href="/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-xl transition-colors text-center">
-                                🔄 بازگشت و ویرایش اطلاعات
-                            </a>
+                            <!-- Steps -->
+                            @if (plan.Steps.Any())
+                            {
+                                <div class="mb-6">
+                                    <h5 class="text-sm font-semibold text-indigo-600 mb-2 flex items-center gap-1">
+                                        <span class="w-6 h-6 bg-indigo-100 rounded-lg flex items-center justify-center text-xs">📋</span>
+                                        مراحل اقدام
+                                    </h5>
+                                    <div>
+                                        @for (int i = 0; i < plan.Steps.Count; i++)
+                                        {
+                                            var step = plan.Steps[i];
+                                            <div class="flex items-start gap-2 pb-3">
+                                                <div class="w-7 h-7 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">@(i + 1)</div>
+                                                <div class="text-sm text-gray-600 pt-0.5">@step</div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Expandable Sections -->
+                            <div class="flex flex-wrap gap-3">
+                                @if (plan.RecommendedVisa.Requirements.Any())
+                                {
+                                    <details class="group flex-1 min-w-[200px]">
+                                        <summary class="flex items-center gap-2 cursor-pointer text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl p-3 transition-colors">
+                                            <span>📄</span> نیازمندی‌های ویزا
+                                            <svg class="w-4 h-4 mr-auto transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                        </summary>
+                                        <div class="mt-2 space-y-1">
+                                            @foreach (var req in plan.RecommendedVisa.Requirements)
+                                            {
+                                                <div class="text-sm bg-white border border-indigo-100 rounded-lg p-2.5 text-gray-600">• @req</div>
+                                            }
+                                        </div>
+                                    </details>
+                                }
+                                @if (plan.RecommendedVisa.Benefits.Any())
+                                {
+                                    <details class="group flex-1 min-w-[200px]">
+                                        <summary class="flex items-center gap-2 cursor-pointer text-sm font-medium text-green-600 bg-green-50 hover:bg-green-100 rounded-xl p-3 transition-colors">
+                                            <span>🎁</span> مزایای ویزا
+                                            <svg class="w-4 h-4 mr-auto transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                        </summary>
+                                        <div class="mt-2 space-y-1">
+                                            @foreach (var b in plan.RecommendedVisa.Benefits)
+                                            {
+                                                <div class="text-sm bg-white border border-green-100 rounded-lg p-2.5 text-green-700">✓ @b</div>
+                                            }
+                                        </div>
+                                    </details>
+                                }
+                            </div>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             </div>
-        </div>
+
+            <!-- Bottom Action -->
+            <div class="mt-8 text-center">
+                <a href="/" class="inline-flex items-center gap-2 px-8 py-3 bg-white text-indigo-600 border-2 border-indigo-200 rounded-xl hover:bg-indigo-50 hover:border-indigo-300 transition-all font-bold shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    بازگشت و ویرایش اطلاعات
+                </a>
+            </div>
+        }
     </div>
 </div>
 
@@ -244,11 +252,8 @@
 
     protected override void OnInitialized()
     {
-        // Load results from AppState
-        results = AppState.Results;
-        
-        // If no results, redirect to home
-        if (results == null || !results.Any())
+        results = ResultsDataHolder.LatestResults ?? new();
+        if (!results.Any())
         {
             NavigationManager.NavigateTo("/");
         }
