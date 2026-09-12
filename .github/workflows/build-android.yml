@@ -53,7 +53,8 @@ jobs:
           -c Release \
           -f net11.0-android \
           -o ./publish \
-          -p:AndroidPackageFormat=apk
+          -p:AndroidPackageFormat=apk \
+          -p:BUILD_MAUI=true
 
     - name: Build Android APK (Signed)
       if: github.event_name != 'pull_request'
@@ -67,6 +68,7 @@ jobs:
           -f net11.0-android \
           -o ./publish \
           -p:AndroidPackageFormat=apk \
+          -p:BUILD_MAUI=true \
           -p:AndroidKeyStore=true \
           -p:AndroidSigningKeyStore=${{ github.workspace }}/miladxandi.keystore \
           -p:AndroidSigningKeyAlias=$KEYSTORE_ALIAS \
