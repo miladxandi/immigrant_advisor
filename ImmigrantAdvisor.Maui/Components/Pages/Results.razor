@@ -262,12 +262,12 @@
                             {
                                 <MudExpansionPanels>
                                     <MudExpansionPanel>
-                                        <HeaderContent>
+                                        <TitleContent>
                                             <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
                                                 <MudIcon Icon="@Icons.Material.Filled.Description" Color="Color.Primary" />
                                                 <MudText Typo="Typo.subtitle2" Class="font-weight-bold">نیازمندی‌های ویزا</MudText>
                                             </MudStack>
-                                        </HeaderContent>
+                                        </TitleContent>
                                         <ChildContent>
                                             <MudStack Spacing="1">
                                                 @foreach (var req in plan.RecommendedVisa.Requirements)
@@ -285,12 +285,12 @@
                             {
                                 <MudExpansionPanels>
                                     <MudExpansionPanel>
-                                        <HeaderContent>
+                                        <TitleContent>
                                             <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
                                                 <MudIcon Icon="@Icons.Material.Filled.CardGiftcard" Color="Color.Success" />
                                                 <MudText Typo="Typo.subtitle2" Class="font-weight-bold">مزایای ویزا</MudText>
                                             </MudStack>
-                                        </HeaderContent>
+                                        </TitleContent>
                                         <ChildContent>
                                             <MudStack Spacing="1">
                                                 @foreach (var b in plan.RecommendedVisa.Benefits)

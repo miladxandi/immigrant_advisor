@@ -22,7 +22,7 @@
             var idx = i;
             <div class="d-flex align-center" style="flex: 1;">
                 <MudButton Variant="Variant.Text" Size="Size.Small"
-                           Style="min-width: 32px; width: 32px; height: 32px; border-radius: 50%; padding: 0; @(idx == currentStep ? "background: #3f51b5; color: white;" : (idx < currentStep ? "background: #4caf50; color: white;" : "background: #e0e0e0; color: #666;"))"
+                           Style="@GetStepperButtonStyle(idx)"
                            OnClick="@(() => GoToStep(idx))">
                     @if (idx < currentStep)
                     {
@@ -460,6 +460,17 @@
     private UserFactors factors = new();
     private int currentStep = 0;
     private string[] stepTitles = { "اطلاعات شخصی", "تحصیلات و زبان", "شغل و تخصص", "وضعیت مالی", "سلامت و روان", "اجتماعی و فرهنگی", "اهداف و ترجیحات" };
+
+    private string GetStepperButtonStyle(int idx)
+    {
+        var baseStyle = "min-width: 32px; width: 32px; height: 32px; border-radius: 50%; padding: 0;";
+        if (idx == currentStep)
+            return baseStyle + " background: #3f51b5; color: white;";
+        else if (idx < currentStep)
+            return baseStyle + " background: #4caf50; color: white;";
+        else
+            return baseStyle + " background: #e0e0e0; color: #666;";
+    }
 
     // String-backed select bindings
     private string _genderString = "Male";
