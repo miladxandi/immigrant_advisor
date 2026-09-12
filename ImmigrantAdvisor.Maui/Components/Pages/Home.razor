@@ -16,12 +16,12 @@
 
 <!-- Stepper -->
 <MudPaper Class="mx-4 mt-n5 pa-4" Elevation="4" Style="border-radius: 16px; z-index: 10; position: relative;">
-    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+    <div class="d-flex align-center" style="gap: 8px;">
         @for (int i = 0; i < 7; i++)
         {
             var idx = i;
-            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex: 1;">
-                <MudButton Variant="Variant.Text" Size="Size.Small" 
+            <div class="d-flex align-center" style="flex: 1;">
+                <MudButton Variant="Variant.Text" Size="Size.Small"
                            Style="min-width: 32px; width: 32px; height: 32px; border-radius: 50%; padding: 0; @(idx == currentStep ? "background: #3f51b5; color: white;" : (idx < currentStep ? "background: #4caf50; color: white;" : "background: #e0e0e0; color: #666;"))"
                            OnClick="@(() => GoToStep(idx))">
                     @if (idx < currentStep)
@@ -35,11 +35,11 @@
                 </MudButton>
                 @if (idx < 6)
                 {
-                    <MudDivider Style="flex: 1;" />
+                    <div style="flex: 1; height: 2px; background: @(idx < currentStep ? "#4caf50" : "#e0e0e0"); margin: 0 4px;"></div>
                 }
-            </MudStack>
+            </div>
         }
-    </MudStack>
+    </div>
     <MudText Typo="Typo.body2" Class="text-center mt-2" Style="color: #3f51b5;">
         <strong>@stepTitles[currentStep]</strong>
         <span class="text-grey ms-2">مرحله @(currentStep + 1) از ۷</span>
@@ -459,7 +459,6 @@
 @code {
     private UserFactors factors = new();
     private int currentStep = 0;
-    private int _activeStepIndex = 0;
     private string[] stepTitles = { "اطلاعات شخصی", "تحصیلات و زبان", "شغل و تخصص", "وضعیت مالی", "سلامت و روان", "اجتماعی و فرهنگی", "اهداف و ترجیحات" };
 
     // String-backed select bindings
@@ -549,7 +548,6 @@
         if (step <= currentStep)
         {
             currentStep = step;
-            _activeStepIndex = step;
         }
     }
 
@@ -558,7 +556,6 @@
         if (currentStep < 6)
         {
             currentStep++;
-            _activeStepIndex = currentStep;
         }
     }
 
@@ -567,7 +564,6 @@
         if (currentStep > 0)
         {
             currentStep--;
-            _activeStepIndex = currentStep;
         }
     }
 
@@ -575,18 +571,7 @@
     {
         factors = new UserFactors();
         currentStep = 0;
-        _activeStepIndex = 0;
         SyncStringsFromModel();
-    }
-
-    private void OnMaritalStatusStringChanged(string value)
-    {
-        _maritalStatusString = value;
-        if (Enum.TryParse<MaritalStatus>(value, out var ms))
-        {
-            factors.MaritalStatus = ms;
-        }
-        StateHasChanged();
     }
 
     private void ToggleGoal(MigrationGoal goal, bool isChecked)
