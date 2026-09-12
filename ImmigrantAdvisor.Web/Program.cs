@@ -2,6 +2,7 @@ using ImmigrantAdvisor.Shared.Models;
 using ImmigrantAdvisor.Shared.Services;
 using ImmigrantAdvisor.Web.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.DataProtection;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,11 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://+:{port}");
 
 builder.Services.AddMudServices();
+
+// Configure data protection to persist keys across restarts
+builder.Services.AddDataProtection()
+    .SetApplicationName("ImmigrantAdvisor")
+    .PersistKeysToFileSystem(new System.IO.DirectoryInfo("/tmp/dataprotection-keys"));
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
