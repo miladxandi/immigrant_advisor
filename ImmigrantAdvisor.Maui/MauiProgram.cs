@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using MudBlazor.Services;
 using ImmigrantAdvisor.Shared.Services;
 
 namespace ImmigrantAdvisor.Maui;
@@ -19,6 +20,7 @@ public static class MauiProgram
             });
 
         builder.Services.AddMauiBlazorWebView();
+        builder.Services.AddMudServices();
         builder.Services.AddScoped<ImmigrationAdvisorService>();
         builder.Services.AddScoped<AppStateService>();
 
